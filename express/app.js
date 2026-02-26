@@ -3,14 +3,14 @@ const port = 3000
 
 
 const server = http.createServer(function(req,res){
-response.write(`hello node`)
+res.write(`hello node`)
 res.end()
 })
 
 server.listen(port, function(error){
 
     if(error){
-        console.log(`Something wrong`, errir)
+        console.log(`Something wrong`, error)
     } else {
         console.log(`Server is listening on port` + port)
     }
