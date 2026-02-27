@@ -3,7 +3,7 @@ const port = 3000
 
 
 const server = http.createServer(function(req,res){
-res.write(`hello node`)
+Response.write(`hello node`)
 res.end()
 })
 
