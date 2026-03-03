@@ -4,15 +4,39 @@ const app = express()
 app.use(cors({
     origin: ['https://localhost:5500', `http://127.0.0.1:5500`]
 }))
-const apiKey ="RGAPI-190bdba8-6444-4fff-b421-19a7155c9018"
+const apiKey ="RGAPI-d597b61d-0a28-4a12-bbb8-525537679128"
 
 app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     try{
         const name = req.params.name;
         const tag = req.params.tag;
+        const region = req.params.region;
+
+        console.log(region, name, tag)
+
+        const regionMap={
+            eun1: "europe",
+            euw1 : "europe",
+            br1:"americas",
+            jp1:"asia",
+            kr:"asia",
+            la1:"americas",
+            la2:"americas",
+            tr1:"europe",
+            ru:"europe",
+            na1:"americas",
+            me1:"asia",
+            oc1:"asia",
+            sg2:"asia",
+            tw1:"asia",
+            vn2:"asia"
+
+
+        }
         
-    const response = await fetch(`https://europe.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${name}/${tag}?api_key=${apiKey}`)
+    const response = await fetch(`https://${regionMap[region]}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${name}/${tag}?api_key=${apiKey}`)
     
+    console.log(response);
     if(!response.ok){
         throw new Error("cant fetch");
     }
@@ -24,8 +48,8 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     const puuid = data.puuid;
     
 
-    const response2 = await fetch(`https://eun1.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}?api_key=${apiKey}`)
-
+    const response2 = await fetch(`https://${region}.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}?api_key=${apiKey}`)
+    console.log(response2);
     if(!response2.ok){
         throw new Error("cant fetch ranked stats");
     }
