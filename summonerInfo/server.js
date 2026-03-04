@@ -4,7 +4,7 @@ const app = express()
 app.use(cors({
     origin: ['https://localhost:5500', `http://127.0.0.1:5500`]
 }))
-const apiKey ="RGAPI-d597b61d-0a28-4a12-bbb8-525537679128"
+const apiKey ="RGAPI-378de0f5-519c-45c5-bf34-59435a719d69"
 
 app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     try{
@@ -12,7 +12,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         const tag = req.params.tag;
         const region = req.params.region;
 
-        console.log(region, name, tag)
+       
 
         const regionMap={
             eun1: "europe",
@@ -36,7 +36,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         
     const response = await fetch(`https://${regionMap[region]}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${name}/${tag}?api_key=${apiKey}`)
     
-    console.log(response);
+   
     if(!response.ok){
         throw new Error("cant fetch");
     }
@@ -49,16 +49,27 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     
 
     const response2 = await fetch(`https://${region}.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid}?api_key=${apiKey}`)
-    console.log(response2);
+    
     if(!response2.ok){
         throw new Error("cant fetch ranked stats");
     }
 
     const data2 = await response2.json();
+
+    const response3 = await fetch(`https://${regionMap[region]}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?type=ranked&start=0&count=10&api_key=${apiKey}`)
     
+    if(!response3.ok){
+        throw new Error("cant fetch last 10 matches");
+    }
+    const data3 = await response3.json()
+    
+    console.log(data3[0])
+    
+    const response4 = await fetch(`https://europe.api.riotgames.com/lol/match/v5/matches/EUN1_3917758462?api_key=${apiKey}`)
+
 
     
-    const mergedData = {data,data2}
+    const mergedData = {data,data2,data3}
 
     res.json(mergedData);
     
