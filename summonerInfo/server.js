@@ -4,7 +4,7 @@ const app = express()
 app.use(cors({
     origin: ['https://localhost:5500', `http://127.0.0.1:5500`]
 }))
-const apiKey ="RGAPI-378de0f5-519c-45c5-bf34-59435a719d69"
+const apiKey ="RGAPI-927f67ff-28ff-46cd-b985-adc7f6ef40d0"
 
 app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     try{
@@ -63,15 +63,54 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     }
     const data3 = await response3.json()
     
-    console.log(data3[0])
     
-    const response4 = await fetch(`https://europe.api.riotgames.com/lol/match/v5/matches/EUN1_3917758462?api_key=${apiKey}`)
+     
+    const matchesArray=[]         
 
-
+    for(i = 0;i<data3.length;i++){
     
-    const mergedData = {data,data2,data3}
+    const response4 = await fetch(`https://${regionMap[region]}.api.riotgames.com/lol/match/v5/matches/${data3[i]}?api_key=${apiKey}`)
+        
+        const data4= await response4.json();
+        
+       
+        const gameDuration = data4.info.gameDuration;
+        const championsArray = []
+         const playerKillsArray = []
+         const playerDeathsArray = []
+         const playerAssistsArray = []
+         const playerTeamArray = [];
+         
+        
+        
+        for(j=0;j<data4.info.participants.length;j++){
+        const championName = data4.info.participants[j].championName;
+        championsArray.push(championName);
+        const playerKills = data4.info.participants[j].kills;
+        playerKillsArray.push(playerKills);
+        const playerDeaths = data4.info.participants[j].deaths;
+        playerDeathsArray.push(playerDeaths);
+        const playerAssists = data4.info.participants[j].assists;
+        playerAssistsArray.push(playerAssists);
+        const playerTeam = data4.info.participants[j].teamId
+        playerTeamArray.push(playerTeam)
 
-    res.json(mergedData);
+        }
+        
+    const dataMatch = {playerTeamArray,gameDuration,championsArray,playerKillsArray,playerDeathsArray,playerAssistsArray}
+    
+    matchesArray.push(dataMatch);
+    
+    }
+    
+       
+   
+    
+    
+    const mergedData = {data,data2,data3, matchesArray}
+
+
+    res.send(JSON.stringify(mergedData, null,2))
     
     
 
