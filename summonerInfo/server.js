@@ -2,9 +2,9 @@ const express = require(`express`)
 const cors = require(`cors`)
 const app = express()
 app.use(cors({
-    origin: ['https://localhost:5500', `http://127.0.0.1:5500`]
+    origin: ['https://localhost:5500', `http://127.0.0.1:5500`, `http://localhost:5173`]
 }))
-const apiKey ="RGAPI-927f67ff-28ff-46cd-b985-adc7f6ef40d0"
+const apiKey ="RGAPI-12182e96-a75d-4c9a-85a4-8aa666b79fee"
 
 app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     try{
@@ -80,6 +80,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
          const playerDeathsArray = []
          const playerAssistsArray = []
          const playerTeamArray = [];
+         const winningTeam = [];
          
         
         
@@ -94,10 +95,11 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         playerAssistsArray.push(playerAssists);
         const playerTeam = data4.info.participants[j].teamId
         playerTeamArray.push(playerTeam)
-
+        const winner = data4.info.participants[j].win
+        winningTeam.push(winner)
         }
         
-    const dataMatch = {playerTeamArray,gameDuration,championsArray,playerKillsArray,playerDeathsArray,playerAssistsArray}
+    const dataMatch = {playerTeamArray,gameDuration,championsArray,playerKillsArray,playerDeathsArray,playerAssistsArray,winningTeam}
     
     matchesArray.push(dataMatch);
     
