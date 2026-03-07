@@ -1,10 +1,16 @@
+require('dotenv').config({ path: './.env' })
+
+
 const express = require(`express`)
 const cors = require(`cors`)
 const app = express()
+
 app.use(cors({
     origin: ['https://localhost:5500', `http://127.0.0.1:5500`, `http://localhost:5173`]
 }))
-const apiKey ="RGAPI-12182e96-a75d-4c9a-85a4-8aa666b79fee"
+const apiKey = process.env.RIOT_API_KEY
+
+
 
 app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     try{
@@ -33,11 +39,17 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
 
 
         }
+    
+
+    console.log(apiKey);
         
     const response = await fetch(`https://${regionMap[region]}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${name}/${tag}?api_key=${apiKey}`)
     
+    console.log(apiKey)
    
     if(!response.ok){
+        const errData = await response.json();
+        console.log(errData);
         throw new Error("cant fetch");
     }
 
