@@ -93,6 +93,33 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
          const playerAssistsArray = []
          const playerTeamArray = [];
          const winningTeam = [];
+         const minionKillsArray = [];
+         const damageDealtArray =[];
+         const playerBuildsArray0 = [];
+         const playerBuildsArray1 = [];
+         const playerBuildsArray2 = [];
+         const playerBuildsArray3 = [];
+         const playerBuildsArray4 = [];
+         const playerBuildsArray5 = [];
+         const playerBuildsArray6 = [];
+         const summoner1Array = [];
+         const summoner2Array = [];
+         const playerLevelArray= [];
+         const riotIdGameNamesArray = [];
+         const riotIdTagLinesArray = [];
+         const keyStonesArray = []
+         const keyRune1Array = [];
+         const keyRune2Array = [];
+         const keyRune3Array = [];
+         const secondaryRuneName = [];
+         const secondaryRune1Array = [];
+         const secondaryRune2Array = [];
+         const playerShard1Array = [];
+          const playerShard2Array = [];
+            const playerShard3Array = []; 
+
+
+
          
         
         
@@ -109,9 +136,97 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         playerTeamArray.push(playerTeam)
         const winner = data4.info.participants[j].win
         winningTeam.push(winner)
+        const minions = data4.info.participants[j].totalMinionsKilled
+        minionKillsArray.push(minions);
+        const damage = data4.info.participants[j].totalDamageDealt;
+        damageDealtArray.push(damage);
+        const item1 = data4.info.participants[j].item0;
+        playerBuildsArray0.push(item1);
+        const item2 = data4.info.participants[j].item1;
+        playerBuildsArray1.push(item2);
+        const item3 = data4.info.participants[j].item2;
+        playerBuildsArray2.push(item3);
+        const item4 = data4.info.participants[j].item3;
+        playerBuildsArray3.push(item4);
+        const item5 = data4.info.participants[j].item4;
+        playerBuildsArray4.push(item5);
+        const item6 = data4.info.participants[j].item5;
+        playerBuildsArray5.push(item6);
+        const item7 = data4.info.participants[j].item6;
+        playerBuildsArray6.push(item7);
+        const summ1 = data4.info.participants[j].summoner1Id
+        summoner1Array.push(summ1)
+        const summ2 = data4.info.participants[j].summoner2Id
+        summoner2Array.push(summ2)
+        const level = data4.info.participants[j].champLevel
+        playerLevelArray.push(level);
+        const name = data4.info.participants[j].riotIdGameName
+        riotIdGameNamesArray.push(name);
+        const tag = data4.info.participants[j].riotIdTagline
+        riotIdTagLinesArray.push(tag);
+        const keyStone = data4.info.participants[j].perks.styles[0].selections[0].perk;
+        keyStonesArray.push(keyStone);
+        const primary1 = data4.info.participants[j].perks.styles[0].selections[1].perk
+        keyRune1Array.push(primary1)
+        const primary2 = data4.info.participants[j].perks.styles[0].selections[2].perk
+        keyRune2Array.push(primary2)
+        const primary3 = data4.info.participants[j].perks.styles[0].selections[3].perk
+        keyRune3Array.push(primary3)
+
+        const secondaryTree = data4.info.participants[j].perks.styles[1].style
+        secondaryRuneName.push(secondaryTree)
+
+        const secondaryRune1 = data4.info.participants[j].perks.styles[1].selections[0].perk;
+        secondaryRune1Array.push(secondaryRune1)
+
+        const secondaryRune2 = data4.info.participants[j].perks.styles[1].selections[1].perk;
+        secondaryRune2Array.push(secondaryRune2)
+
+        const playerShard1 = data4.info.participants[j].perks.statPerks.defense;
+        playerShard1Array.push(playerShard1)
+        const playerShard2 = data4.info.participants[j].perks.statPerks.flex;
+        playerShard2Array.push(playerShard2)
+        const playerShard3 = data4.info.participants[j].perks.statPerks.offense;
+        playerShard3Array.push(playerShard3)
         }
+
+    
         
-    const dataMatch = {playerTeamArray,gameDuration,championsArray,playerKillsArray,playerDeathsArray,playerAssistsArray,winningTeam}
+         
+        
+         
+        
+    const dataMatch = {playerTeamArray,
+        gameDuration,
+        championsArray,
+        playerKillsArray,
+        playerDeathsArray,
+        playerAssistsArray,
+        winningTeam,
+        minionKillsArray,
+        damageDealtArray,
+        playerBuildsArray0,
+        playerBuildsArray1,
+        playerBuildsArray2,
+        playerBuildsArray3,
+        playerBuildsArray4,
+        playerBuildsArray5,
+        playerBuildsArray6,
+        summoner1Array,
+        summoner2Array,
+        playerLevelArray,
+        riotIdGameNamesArray,
+        riotIdTagLinesArray,
+        keyStonesArray,      
+        keyRune1Array,
+        keyRune2Array,
+        keyRune3Array,
+        secondaryRuneName,
+        secondaryRune1Array,
+        secondaryRune2Array,
+        playerShard1Array,
+        playerShard2Array,
+        playerShard3Array}
     
     matchesArray.push(dataMatch);
     
