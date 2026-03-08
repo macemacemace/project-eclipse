@@ -70,18 +70,13 @@ onChange={(e) => setSummonerTag(e.target.value)}  />
 {summonerData && <div>L:{summonerData.data2[0].losses}</div>}
 
 
-{summonerData.match.map((match, index) => (
-  <div key = {index}>
-    {summonerData && <div>Team: {summonerData.match.playerTeamArray[0]}</div>}
-{summonerData && <div>Champ name: {summonerData.match.championsArray[0]}</div>}
-<div style ={{display: 'flex'}}>
-{summonerData && <div>{summonerData.match.playerKillsArray[0]}/</div>}
-{summonerData && <div>{summonerData.match.playerDeathsArray[0]}/</div>}
-{summonerData && <div>{summonerData.match.playerAssistsArray[0]}</div>}
-  </div>
-{summonerData.match[0].winningTeam[0] ? "Win" : "Loss"}
+{summonerData && summonerData.matchesArray.map((match, index) =>(
+  <div key={index}>
+    {summonerData && <div>{match.riotIdGameNamesArray}</div>}
+
   </div>
 ))}
+
 
   </div> //end of main div
 )
