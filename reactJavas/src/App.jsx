@@ -1,5 +1,15 @@
 import React, { useState } from "react";
 import Select from 'react-select';
+import {createBrowserRouter, RouterProvider} from "react-router-dom"
+import {SummonerPage} from "./SummonerPage";
+
+const router = createBrowserRouter([
+  {path: "/", element: <App />},
+  {path: "/:region/:name/:tag", element: <SummonerPage />}
+])
+
+        
+
 
 
 
@@ -61,21 +71,7 @@ onChange={(e) => setSummonerTag(e.target.value)}  />
 <button onClick ={handleSearch}>Search</button>
 
 
-{summonerData && <div>{summonerData.data.gameName}</div>}
-{summonerData && <div>{summonerData.data.tagLine}</div>}
-{summonerData && <div>{summonerData.data2[0].tier}</div>}
-{summonerData && <div>{summonerData.data2[0].rank}</div>}
-{summonerData && <div>LP:{summonerData.data2[0].leaguePoints}</div>}
-{summonerData && <div>W:{summonerData.data2[0].wins}</div>}
-{summonerData && <div>L:{summonerData.data2[0].losses}</div>}
 
-
-{summonerData && summonerData.matchesArray.map((match, index) =>(
-  <div key={index}>
-    {summonerData && <div>{match.riotIdGameNamesArray}</div>}
-
-  </div>
-))}
 
 
   </div> //end of main div
