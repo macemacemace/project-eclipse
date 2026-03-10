@@ -17,11 +17,14 @@ const SummonerPage = () =>{
       
     
    const response = await fetch(`http://localhost:3000/summoner/${region}/${name}/${tag}`)
-    const data = await response.json()
-    
-    if(!response.ok){
+   if(!response.ok){
       throw new Error("cant fetch data")
     }
+   
+   
+   const data = await response.json()
+    
+    
       setSummonerData(data);
     }
     fetchData()
@@ -30,6 +33,8 @@ const SummonerPage = () =>{
 
   return(
     <div>{summonerData?.data?.gameName}</div>
+    
+
   )
     
   

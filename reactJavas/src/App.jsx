@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import Select from 'react-select';
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
-import {SummonerPage} from "./SummonerPage";
+import SummonerPage from "./SummonerPage";
+import {useNavigate} from 'react-router-dom'
 
-const router = createBrowserRouter([
-  {path: "/", element: <App />},
-  {path: "/:region/:name/:tag", element: <SummonerPage />}
-])
+
 
         
 
@@ -32,25 +30,21 @@ const regions = [
 ]
 
 
-function App(){
+function HomePage(){
 
 
+  const navigate = useNavigate()
   
 
 const [summonerName, setSummonerName] = useState("this is a summoner name");
 const [summonerTag, setSummonerTag] = useState("this is a summoner tag");
 const [summonerRegion, setSummonerRegion] = useState("region");
-const [summonerData, setSummonerData] = useState(null);
+;
 
 async function  handleSearch(){
-  const response = await fetch(`http://localhost:3000/summoner/${summonerRegion}/${summonerName}/${summonerTag}`)
+  
 
-  const data = await response.json();
-
-  setSummonerData(data);
-
-  console.log(data)
-
+  navigate(`/${summonerRegion}/${summonerName}/${summonerTag}`)
   
 
 }
@@ -78,6 +72,14 @@ onChange={(e) => setSummonerTag(e.target.value)}  />
 )
 
 }
+const router = createBrowserRouter([
+  {path: "/", element: <HomePage />},
+  {path: "/:region/:name/:tag", element: <SummonerPage />}
+])
+
+function App(){
+  return <RouterProvider router={router} />
+}
 
 export default App;
-
+export {router}
