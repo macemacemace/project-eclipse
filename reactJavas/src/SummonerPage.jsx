@@ -45,8 +45,10 @@ const SummonerPage = () =>{
       <div>
       <div>Game Duration:{match.gameDuration}</div>
 
-
+      <div>Summoner Name:{match.riotIdGameNamesArray[0]}</div>
+       <div>tag:{match.riotIdTagLinesArray[0]}</div>
       <div>Champ name:{match.championsArray[0]}</div>
+      
       <div style={{display: 'flex'}}>
         <div>KDA:{match.playerKillsArray[0]}/</div>
         <div>{match.playerDeathsArray[0]}/</div>
@@ -59,8 +61,22 @@ const SummonerPage = () =>{
       <div>Primary rune 1:{match.keyRune1Array[0]}</div>
       <div>Primary rune 2:{match.keyRune2Array[0]}</div>
       <div>Primary rune 3:{match.keyRune3Array[0]}</div>
+      <div>second rune tree:{match.secondaryRuneName[0]}</div>
+      <div>first secondary rune:{match.secondaryRune1Array[0]}</div>
+    <div>second secondary rune:{match.secondaryRune1Array[0]}</div>
       <div>CS:{match.minionKillsArray[0]}</div>
       
+      <div>first item:{match.playerBuildsArray0[0]}</div>
+      <div>second item:{match.playerBuildsArray1[0]}</div>
+      <div>third item:{match.playerBuildsArray2[0]}</div>
+      <div>forth item:{match.playerBuildsArray3[0]}</div>
+      <div>fifth item:{match.playerBuildsArray4[0]}</div>
+      <div>sixt item:{match.playerBuildsArray5[0]}</div>
+      <div>sevent item:{match.playerBuildsArray6[0]}</div>
+
+      <div>first summoner:{match.summoner1Array[0]}</div>
+      <div>second summoner:{match.summoner2Array[0]}</div>
+      <div>did he win?{match.winningTeam[0]}</div>
 
       </div>//end of inside map div
     ))}
