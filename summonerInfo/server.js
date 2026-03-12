@@ -117,6 +117,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
          const playerShard1Array = [];
           const playerShard2Array = [];
             const playerShard3Array = []; 
+            
 
 
 
@@ -136,10 +137,11 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         playerTeamArray.push(playerTeam)
         const winner = data4.info.participants[j].win
         winningTeam.push(winner)
-        const minions = data4.info.participants[j].totalMinionsKilled
+        const minions = data4.info.participants[j].totalMinionsKilled + data4.info.participants[j].neutralMinionsKilled
         minionKillsArray.push(minions);
-        const damage = data4.info.participants[j].totalDamageDealt;
+        const damage = data4.info.participants[j].totalDamageDealtToChampions;
         damageDealtArray.push(damage);
+        const takenDamage = data4.info.participants[j]
         const item1 = data4.info.participants[j].item0;
         playerBuildsArray0.push(item1);
         const item2 = data4.info.participants[j].item1;
