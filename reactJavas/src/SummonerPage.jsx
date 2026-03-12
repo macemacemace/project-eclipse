@@ -17,13 +17,20 @@ const SummonerPage = () =>{
       
     
    const response = await fetch(`http://localhost:3000/summoner/${region}/${name}/${tag}`)
+   const summonerJson = await fetch("https://ddragon.leagueoflegends.com/cdn/16.5.1/data/en_US/summoner.json");
    if(!response.ok){
       throw new Error("cant fetch data")
     }
+   if (!summonerJson.ok){
+    throw new Error("cant fetch summoner json")
+   }
    
    
    const data = await response.json()
-    
+   const summonerData = await summonerJson.json();
+
+
+   console.log(summonerData)
    console.log(data)
     
       setSummonerData(data);
@@ -45,40 +52,66 @@ const SummonerPage = () =>{
       <div>
       <div>Game Duration:{match.gameDuration}</div>
 
-      <div>Summoner Name:{match.riotIdGameNamesArray[0]}</div>
-       <div>tag:{match.riotIdTagLinesArray[0]}</div>
-      <div>Champ name:{match.championsArray[0]}</div>
+      {Array.from({length: 10}).map((_, playerIndex) => (
+
+
+        <div key = {playerIndex}>
+      <div>---------------Summoner Name:{match.riotIdGameNamesArray[playerIndex]}-----------------------</div>
+       <div>tag:{match.riotIdTagLinesArray[playerIndex]}</div>
+      <div>Champ name:{match.championsArray[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/champion/${match.championsArray[playerIndex]}.png`} alt="champ icon"  style={{width: '50px', height: '50px'}}/>
       
       <div style={{display: 'flex'}}>
-        <div>KDA:{match.playerKillsArray[0]}/</div>
-        <div>{match.playerDeathsArray[0]}/</div>
-        <div>{match.playerAssistsArray[0]}</div>
+        <div>KDA:{match.playerKillsArray[playerIndex]}/</div>
+        <div>{match.playerDeathsArray[playerIndex]}/</div>
+        <div>{match.playerAssistsArray[playerIndex]}</div>
         
         </div>
       
-      <div>DamageDealt:{match.damageDealtArray[0]}</div>
-      <div>Key stone:{match.keyStonesArray[0]}</div>
-      <div>Primary rune 1:{match.keyRune1Array[0]}</div>
-      <div>Primary rune 2:{match.keyRune2Array[0]}</div>
-      <div>Primary rune 3:{match.keyRune3Array[0]}</div>
-      <div>second rune tree:{match.secondaryRuneName[0]}</div>
-      <div>first secondary rune:{match.secondaryRune1Array[0]}</div>
-    <div>second secondary rune:{match.secondaryRune1Array[0]}</div>
-      <div>CS:{match.minionKillsArray[0]}</div>
+      <div>DamageDealt:{match.damageDealtArray[playerIndex]}</div>
+      <div>Key stone:{match.keyStonesArray[playerIndex]}</div>
+      <div>Primary rune 1:{match.keyRune1Array[playerIndex]}</div>
+      <div>Primary rune 2:{match.keyRune2Array[playerIndex]}</div>
+      <div>Primary rune 3:{match.keyRune3Array[playerIndex]}</div>
+      <div>second rune tree:{match.secondaryRuneName[playerIndex]}</div>
+      <div>first secondary rune:{match.secondaryRune1Array[playerIndex]}</div>
+    <div>second secondary rune:{match.secondaryRune2Array[playerIndex]}</div>
+    <div>first shard:{match.playerShard1Array[playerIndex]}</div>
+    <div>second shard:{match.playerShard2Array[playerIndex]}</div>
+    <div>third shard:{match.playerShard3Array[playerIndex]}</div>
+      <div>CS:{match.minionKillsArray[playerIndex]}</div>
+      <div>Level:{match.playerLevelArray[playerIndex]}</div>
+
       
-      <div>first item:{match.playerBuildsArray0[0]}</div>
-      <div>second item:{match.playerBuildsArray1[0]}</div>
-      <div>third item:{match.playerBuildsArray2[0]}</div>
-      <div>forth item:{match.playerBuildsArray3[0]}</div>
-      <div>fifth item:{match.playerBuildsArray4[0]}</div>
-      <div>sixt item:{match.playerBuildsArray5[0]}</div>
-      <div>sevent item:{match.playerBuildsArray6[0]}</div>
+      <div>first item:{match.playerBuildsArray0[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray0[playerIndex]}.png`} alt="first item" style ={{width: '50px', height: '50px'}}/>
+      <div>second item:{match.playerBuildsArray1[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray1[playerIndex]}.png`} alt="second item" style ={{width: '50px', height: '50px'}}/>
+      <div>third item:{match.playerBuildsArray2[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray2[playerIndex]}.png`} alt="third item" style ={{width: '50px', height: '50px'}}/>
+      <div>forth item:{match.playerBuildsArray3[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray3[playerIndex]}.png`} alt="forth item" style ={{width: '50px', height: '50px'}}/>
+      <div>fifth item:{match.playerBuildsArray4[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray4[playerIndex]}.png`} alt="fifth item" style ={{width: '50px', height: '50px'}}/>
+      <div>sixt item:{match.playerBuildsArray5[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray5[playerIndex]}.png`} alt="sixth item" style ={{width: '50px', height: '50px'}}/>
+      <div>sevent item:{match.playerBuildsArray6[playerIndex]}</div>
+        <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray6[playerIndex]}.png`} alt="seveth item" style ={{width: '50px', height: '50px'}}/>
 
-      <div>first summoner:{match.summoner1Array[0]}</div>
-      <div>second summoner:{match.summoner2Array[0]}</div>
-      <div>did he win?{match.winningTeam[0]}</div>
+        
+      <div>first summoner:{match.summoner1Array[playerIndex]}</div>
+      
+      <div>second summoner:{match.summoner2Array[playerIndex]}</div>
 
+
+
+      <div>did he win?{match.winningTeam[playerIndex] ? "Win" : "Loss"}</div>
+        
+        </div> 
+       
+        ))}
       </div>//end of inside map div
+      
     ))}
 
    </div> // end of main div
