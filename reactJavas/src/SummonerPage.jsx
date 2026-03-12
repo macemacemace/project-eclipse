@@ -52,6 +52,7 @@ const SummonerPage = () =>{
       <div>---------------Summoner Name:{match.riotIdGameNamesArray[playerIndex]}-----------------------</div>
        <div>tag:{match.riotIdTagLinesArray[playerIndex]}</div>
       <div>Champ name:{match.championsArray[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/champion/${match.championsArray[playerIndex]}.png`} alt="champ icon" img style={{width: '50px', height: '50px'}}/>
       
       <div style={{display: 'flex'}}>
         <div>KDA:{match.playerKillsArray[playerIndex]}/</div>
@@ -76,6 +77,7 @@ const SummonerPage = () =>{
 
       
       <div>first item:{match.playerBuildsArray0[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${{match.playerBuildsArray0[playerIndex]}}.png`} alt="" />
       <div>second item:{match.playerBuildsArray1[playerIndex]}</div>
       <div>third item:{match.playerBuildsArray2[playerIndex]}</div>
       <div>forth item:{match.playerBuildsArray3[playerIndex]}</div>
