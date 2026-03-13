@@ -11,33 +11,38 @@ const SummonerPage = () =>{
 
 
   const [summonerData, setSummonerData] = useState(null);
+  const [spellData, setSpellData] =useState(null);
    
   useEffect(() => {
     async function fetchData() {
       
     
    const response = await fetch(`http://localhost:3000/summoner/${region}/${name}/${tag}`)
-   const summonerJson = await fetch("https://ddragon.leagueoflegends.com/cdn/16.5.1/data/en_US/summoner.json");
+   const spellJson = await fetch("https://ddragon.leagueoflegends.com/cdn/16.5.1/data/en_US/summoner.json");
    if(!response.ok){
       throw new Error("cant fetch data")
     }
-   if (!summonerJson.ok){
+   if (!spellJson.ok){
     throw new Error("cant fetch summoner json")
    }
    
    
    const data = await response.json()
-   const summonerData = await summonerJson.json();
+   const spellDataParsed = await spellJson.json();
 
 
-   console.log(summonerData)
+   console.log(spellData)
    console.log(data)
     
       setSummonerData(data);
+      setSpellData(spellDataParsed)
     }
     fetchData()
   }, [])
 
+  function getSpellName(spellId, spellData){
+    return Object.values(spellData.data).find(spell => spell.key == String(spellId))
+  }
 
   return(
     <div>
@@ -100,9 +105,9 @@ const SummonerPage = () =>{
 
         
       <div>first summoner:{match.summoner1Array[playerIndex]}</div>
-      
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/spell/${spellData && getSpellName(match.summoner1Array[playerIndex], spellData)?.id}.png`} />
       <div>second summoner:{match.summoner2Array[playerIndex]}</div>
-
+        <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/spell/${spellData && getSpellName(match.summoner2Array[playerIndex], spellData)?.id}.png`} />
 
 
       <div>did he win?{match.winningTeam[playerIndex] ? "Win" : "Loss"}</div>
