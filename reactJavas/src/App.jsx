@@ -3,6 +3,8 @@ import Select from 'react-select';
 import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import SummonerPage from "./SummonerPage";
 import {useNavigate} from 'react-router-dom'
+import './HomePage.css'
+import logo from './logo.svg'
 
 
 
@@ -36,9 +38,9 @@ function HomePage(){
   const navigate = useNavigate()
   
 
-const [summonerName, setSummonerName] = useState("this is a summoner name");
-const [summonerTag, setSummonerTag] = useState("this is a summoner tag");
-const [summonerRegion, setSummonerRegion] = useState("region");
+const [summonerName, setSummonerName] = useState("");
+const [summonerTag, setSummonerTag] = useState("");
+const [summonerRegion, setSummonerRegion] = useState("Region");
 ;
 
 async function  handleSearch(){
@@ -49,26 +51,49 @@ async function  handleSearch(){
 
 }
 return (
-<div> 
-  <input 
+
+  
+ 
+  <div className="home-container">
+     <img src={logo} alt="lolo" className="logo" />
+  <div className = "search-wrapper">
+    <div style={{display: 'flex'}}>
+  
+  <input className="search-summoner"
+  placeholder="Enter name"
 type="text"
 value = {summonerName}
 onChange={(e) => setSummonerName(e.target.value)} />
-<input type="text"
+
+
+<input className="search-tag"
+type="text"
+placeholder="Tag"
 value={summonerTag}
 onChange={(e) => setSummonerTag(e.target.value)}  />
+
 <Select
+placeholder= "Region"
+  styles={{
+    control:(base) =>({...base, backgroundColor: 'black',color: 'white',height: '60px', border: 'none', boxShadow: 'none', color: 'gray', fontSize: '25px' }),
+    singleValue: (base) =>({...base, color: 'white'}),
+    menu: (base) =>({...base, backgroundColor: 'black'}),
+    option: (base) =>({...base, backgroundColor: 'black' ,color: 'white'})
+  }}
         options={regions}
         onChange={(selected) => setSummonerRegion(selected.value)}
       />
+  </div> 
+  </div>
 
-<button onClick ={handleSearch}>Search</button>
+<button onClick ={handleSearch}>Find Summoner</button>
 
 
 
 
 
   </div> //end of main div
+ 
 )
 
 }

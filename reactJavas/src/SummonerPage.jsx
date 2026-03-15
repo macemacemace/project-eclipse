@@ -12,6 +12,7 @@ const SummonerPage = () =>{
 
   const [summonerData, setSummonerData] = useState(null);
   const [spellData, setSpellData] =useState(null);
+  const [runesData, setRunesData] = useState(null);
    
   useEffect(() => {
     async function fetchData() {
@@ -19,29 +20,60 @@ const SummonerPage = () =>{
     
    const response = await fetch(`http://localhost:3000/summoner/${region}/${name}/${tag}`)
    const spellJson = await fetch("https://ddragon.leagueoflegends.com/cdn/16.5.1/data/en_US/summoner.json");
+   const runesJson = await fetch (`https://ddragon.leagueoflegends.com/cdn/16.5.1/data/en_US/runesReforged.json`)
    if(!response.ok){
       throw new Error("cant fetch data")
     }
    if (!spellJson.ok){
     throw new Error("cant fetch summoner json")
    }
+   if(!runesJson.ok){
+    throw new Error("cant fetch runes");
+   }
    
-   
+   const runesDataParsed = await runesJson.json();
    const data = await response.json()
    const spellDataParsed = await spellJson.json();
 
-
+   
    console.log(spellData)
    console.log(data)
-    
+   console.log(runesData)
+   
+
+
       setSummonerData(data);
       setSpellData(spellDataParsed)
+      setRunesData(runesDataParsed)
+
     }
     fetchData()
   }, [])
 
   function getSpellName(spellId, spellData){
     return Object.values(spellData.data).find(spell => spell.key == String(spellId))
+  }
+  function getRuneName(runeId, runesData){
+     for (let i = 0; i < runesData.length; i++) {
+      const tree = runesData[i];
+      if(tree.id == runeId){
+        return tree;
+      }
+      
+      for (let j = 0; j < tree.slots.length; j++) {
+        const insideTree = tree.slots[j];
+        if(insideTree.id == runeId){
+        return insideTree;
+      }
+        for (let k = 0; k < insideTree.runes.length; k++) {
+          const rune = insideTree.runes[k];
+          if (rune.id == runeId){
+            return rune;
+          }
+        }
+        
+      }
+     }
   }
 
   return(
@@ -75,12 +107,19 @@ const SummonerPage = () =>{
       
       <div>DamageDealt:{match.damageDealtArray[playerIndex]}</div>
       <div>Key stone:{match.keyStonesArray[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyStonesArray[playerIndex], runesData)?.icon}`} alt = "keystone"/>
       <div>Primary rune 1:{match.keyRune1Array[playerIndex]}</div>
+       <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune1Array[playerIndex], runesData)?.icon}`} alt = "keystone1"/>
       <div>Primary rune 2:{match.keyRune2Array[playerIndex]}</div>
+       <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune2Array[playerIndex], runesData)?.icon}`} alt = "keystone2"/>
       <div>Primary rune 3:{match.keyRune3Array[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune3Array[playerIndex], runesData)?.icon}`} alt = "keystone3"/>
       <div>second rune tree:{match.secondaryRuneName[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRuneName[playerIndex], runesData)?.icon}`} alt = "secondary tree"/>
       <div>first secondary rune:{match.secondaryRune1Array[playerIndex]}</div>
+      <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRune1Array[playerIndex], runesData)?.icon}`} alt = "keystone2"/>
     <div>second secondary rune:{match.secondaryRune2Array[playerIndex]}</div>
+    <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRune2Array[playerIndex], runesData)?.icon}`} alt = "keystone2"/>
     <div>first shard:{match.playerShard1Array[playerIndex]}</div>
     <div>second shard:{match.playerShard2Array[playerIndex]}</div>
     <div>third shard:{match.playerShard3Array[playerIndex]}</div>
@@ -112,7 +151,7 @@ const SummonerPage = () =>{
 
       <div>did he win?{match.winningTeam[playerIndex] ? "Win" : "Loss"}</div>
         
-        </div> 
+        </div> // end of nested loop div
        
         ))}
       </div>//end of inside map div
