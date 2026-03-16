@@ -65,18 +65,24 @@ input{
     font-size: 25px;
     
 }
+
 .logo{
-   width: 3000px;
-   height: 500px;
+   width: 800px;
+   height: 450px;
+   
+   
 
     
     margin-bottom: -250px;
+    margin-top: 150px;
 
     image-rendering: crisp-edges;
     overflow: visible;
+
     
 
 
     
 }
+
 

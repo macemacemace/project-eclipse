@@ -4,7 +4,8 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom"
 import SummonerPage from "./SummonerPage";
 import {useNavigate} from 'react-router-dom'
 import './HomePage.css'
-import logo from './logo.svg'
+import Logo from './logo.svg?react'
+
 
 
 
@@ -55,7 +56,9 @@ return (
   
  
   <div className="home-container">
-     <img src={logo} alt="lolo" className="logo" />
+    <div className = "logo-wrapper">
+     <Logo className="logo" />
+     </div>
   <div className = "search-wrapper">
     <div style={{display: 'flex'}}>
   
@@ -75,7 +78,7 @@ onChange={(e) => setSummonerTag(e.target.value)}  />
 <Select
 placeholder= "Region"
   styles={{
-    control:(base) =>({...base, backgroundColor: 'black',color: 'white',height: '60px', border: 'none', boxShadow: 'none', color: 'gray', fontSize: '25px' }),
+    control:(base) =>({...base, backgroundColor: 'black',color: 'white',height: '60px', border: 'none', boxShadow: 'none', fontSize: '25px' }),
     singleValue: (base) =>({...base, color: 'white'}),
     menu: (base) =>({...base, backgroundColor: 'black'}),
     option: (base) =>({...base, backgroundColor: 'black' ,color: 'white'})
