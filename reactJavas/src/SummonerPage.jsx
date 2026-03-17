@@ -84,6 +84,8 @@ const SummonerPage = () =>{
     <div>{summonerData?.data2?.[0]?.rank}</div>
     <div>W:{summonerData?.data2?.[0]?.wins}</div>
     <div>L:{summonerData?.data2?.[0]?.losses}</div>
+    <div>Icon:{summonerData?.data5?.profileIconId}</div>
+    <div>Summoner level:{summonerData?.data5?.summonerLevel}</div>
 
     {summonerData?.matchesArray.map((match,index) => (
       <div>

@@ -60,7 +60,7 @@ return (
      <Logo className="logo" />
      </div>
   <div className = "search-wrapper">
-    <div style={{display: 'flex'}}>
+    <div style={{display: 'flex', overflow: 'hidden', borderRadius: '100px'}}>
   
   <input className="search-summoner"
   placeholder="Enter name"
@@ -78,13 +78,15 @@ onChange={(e) => setSummonerTag(e.target.value)}  />
 <Select
 placeholder= "Region"
   styles={{
-    control:(base) =>({...base, backgroundColor: 'black',color: 'white',height: '60px', border: 'none', boxShadow: 'none', fontSize: '25px' }),
+    control:(base) =>({...base, backgroundColor: 'black',color: 'white',height: '60px', border: 'none', boxShadow: 'none', fontSize: '25px'}),
     singleValue: (base) =>({...base, color: 'white'}),
-    menu: (base) =>({...base, backgroundColor: 'black'}),
-    option: (base) =>({...base, backgroundColor: 'black' ,color: 'white'})
+    menu: (base) =>({...base, backgroundColor: 'black', zIndex: 9999, border: '1px solid white'}),
+    option: (base) =>({...base, backgroundColor: 'black' ,color: 'white', fontFamily: 'Arial'}),
+    menuPortal: (base)=>({...base, zIndex: 9999})
   }}
         options={regions}
         onChange={(selected) => setSummonerRegion(selected.value)}
+        menuPortalTarget={document.body}
       />
   </div> 
   </div>

@@ -75,8 +75,17 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     }
     const data3 = await response3.json()
     
+    const response5 = await fetch(`https://${region}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/${puuid}?api_key=${apiKey}`)
     
-     
+     if(!response5.ok) {
+        throw new Error("cant fetch summoner icon and lever")
+     }
+
+     const data5 = await response5.json()
+
+
+
+
     const matchesArray=[]         
 
     for(i = 0;i<data3.length;i++){
@@ -117,6 +126,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
          const playerShard1Array = [];
           const playerShard2Array = [];
             const playerShard3Array = []; 
+            
             
 
 
@@ -192,6 +202,8 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         playerShard3Array.push(playerShard3)
         }
 
+        
+
     
         
          
@@ -238,7 +250,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
    
     
     
-    const mergedData = {data,data2,data3, matchesArray}
+    const mergedData = {data,data2,data3,data5, matchesArray}
 
 
     res.send(JSON.stringify(mergedData, null,2))

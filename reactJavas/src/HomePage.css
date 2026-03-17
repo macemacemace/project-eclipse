@@ -48,7 +48,7 @@ button{
     border-radius: 100px;
     display: flex;
     align-items: center;
-    overflow: hidden;
+    overflow: visible;
     margin-top: 200px;
     
 }
