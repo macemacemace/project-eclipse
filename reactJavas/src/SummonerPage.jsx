@@ -85,6 +85,7 @@ const SummonerPage = () =>{
     <div>W:{summonerData?.data2?.[0]?.wins}</div>
     <div>L:{summonerData?.data2?.[0]?.losses}</div>
     <div>Icon:{summonerData?.data5?.profileIconId}</div>
+    <img src={` https://ddragon.leagueoflegends.com/cdn/16.5.1/img/profileicon/${summonerData?.data5?.profileIconId}.png`} alt="icon" style={{width: '50px', height:'50px'}} />
     <div>Summoner level:{summonerData?.data5?.summonerLevel}</div>
 
     {summonerData?.matchesArray.map((match,index) => (

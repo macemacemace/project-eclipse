@@ -6,7 +6,7 @@ const cors = require(`cors`)
 const app = express()
 
 app.use(cors({
-    origin: ['https://localhost:5500', `http://127.0.0.1:5500`, `http://localhost:5173`]
+    origin: ['http://localhost:5500', `http://127.0.0.1:5500`, `http://localhost:5173`]
 }))
 const apiKey = process.env.RIOT_API_KEY
 
