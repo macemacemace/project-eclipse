@@ -68,7 +68,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
 
     const data2 = await response2.json();
 
-    const response3 = await fetch(`https://${regionMap[region]}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?type=ranked&start=0&count=10&api_key=${apiKey}`)
+    const response3 = await fetch(`https://${regionMap[region]}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${apiKey}`)
     
     if(!response3.ok){
         throw new Error("cant fetch last 10 matches");

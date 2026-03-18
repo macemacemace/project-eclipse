@@ -82,6 +82,7 @@ const SummonerPage = () =>{
     <div>{summonerData?.data?.tagLine}</div>
     <div>{summonerData?.data2?.[0]?.tier}</div>
     <div>{summonerData?.data2?.[0]?.rank}</div>
+    <img src={`https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-${summonerData?.data2?.[0]?.tier?.toLowerCase()}.png`} alt="rank emblem" style={{height: '80px', width: 'auto'}} />
     <div>W:{summonerData?.data2?.[0]?.wins}</div>
     <div>L:{summonerData?.data2?.[0]?.losses}</div>
     <div>Icon:{summonerData?.data5?.profileIconId}</div>
