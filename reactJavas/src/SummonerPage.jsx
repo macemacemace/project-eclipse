@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useParams} from "react-router-dom"
 import {useState} from "react"
+import './SummonerPage.css'
 
 const SummonerPage = () =>{
 
@@ -77,7 +78,8 @@ const SummonerPage = () =>{
   }
 
   return(
-    <div>
+    <div className="SummonerPage">
+    <div className="profileCard">
     <div>{summonerData?.data?.gameName}</div>
     <div>{summonerData?.data?.tagLine}</div>
     <div>{summonerData?.data2?.[0]?.tier}</div>
@@ -86,9 +88,19 @@ const SummonerPage = () =>{
     <div>W:{summonerData?.data2?.[0]?.wins}</div>
     <div>L:{summonerData?.data2?.[0]?.losses}</div>
     <div>Icon:{summonerData?.data5?.profileIconId}</div>
-    <img src={` https://ddragon.leagueoflegends.com/cdn/16.5.1/img/profileicon/${summonerData?.data5?.profileIconId}.png`} alt="icon" style={{width: '50px', height:'50px'}} />
-    <div>Summoner level:{summonerData?.data5?.summonerLevel}</div>
+        <div>Summoner level:{summonerData?.data5?.summonerLevel}</div>
+     
+     
+      <div className="ProfileIconCard">
+      <img src={` https://ddragon.leagueoflegends.com/cdn/16.5.1/img/profileicon/${summonerData?.data5?.profileIconId}.png`} alt="icon" style={{width: '50px', height:'50px'}} />
 
+    </div> {/* end of profile icon div*/}
+
+
+    </div> // end of profile card
+
+    
+    <div className="Matches">
     {summonerData?.matchesArray.map((match,index) => (
       <div>
       <div>Game Duration:{match.gameDuration}</div>
@@ -161,6 +173,7 @@ const SummonerPage = () =>{
       </div>//end of inside map div
       
     ))}
+    </div>{/* end of css matches div */}
 
    </div> // end of main div
     

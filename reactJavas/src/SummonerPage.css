@@ -1,0 +1,19 @@
+
+
+
+
+.profileCard{
+    display: flex;
+    border: 5px solid #fff;
+}
+
+.SummonerPage{
+    background-color: black;
+    min-height: 100vh;
+    color: white;
+
+}
+
+.Matches{
+    margin-top: 100px;
+}
