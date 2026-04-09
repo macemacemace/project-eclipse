@@ -80,6 +80,15 @@ const SummonerPage = () =>{
   return(
     <div className="SummonerPage">
     <div className="profileCard">
+
+    <div className="ProfileIconCard">
+      <img src={` https://ddragon.leagueoflegends.com/cdn/16.5.1/img/profileicon/${summonerData?.data5?.profileIconId}.png`} alt="icon" style={{width: '50px', height:'50px'}} />
+      <div className="SummonerLevel">
+        {summonerData?.data5?.summonerLevel}</div>
+    </div> {/* end of profile icon div*/}
+
+
+    <div className="profileRight">
     <div>{summonerData?.data?.gameName}</div>
     <div>{summonerData?.data?.tagLine}</div>
     <div>{summonerData?.data2?.[0]?.tier}</div>
@@ -88,16 +97,13 @@ const SummonerPage = () =>{
     <div>W:{summonerData?.data2?.[0]?.wins}</div>
     <div>L:{summonerData?.data2?.[0]?.losses}</div>
     <div>Icon:{summonerData?.data5?.profileIconId}</div>
-        <div>Summoner level:{summonerData?.data5?.summonerLevel}</div>
+        </div>
      
      
-      <div className="ProfileIconCard">
-      <img src={` https://ddragon.leagueoflegends.com/cdn/16.5.1/img/profileicon/${summonerData?.data5?.profileIconId}.png`} alt="icon" style={{width: '50px', height:'50px'}} />
-
-    </div> {/* end of profile icon div*/}
+      
 
 
-    </div> // end of profile card
+    </div>  {/*end of profile card*/}
 
     
     <div className="Matches">
@@ -167,15 +173,15 @@ const SummonerPage = () =>{
 
       <div>did he win?{match.winningTeam[playerIndex] ? "Win" : "Loss"}</div>
         
-        </div> // end of nested loop div
+        </div> 
        
         ))}
-      </div>//end of inside map div
+      </div>
       
     ))}
-    </div>{/* end of css matches div */}
+    </div>
 
-   </div> // end of main div
+   </div> 
     
 
   )

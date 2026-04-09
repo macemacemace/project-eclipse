@@ -1,19 +1,45 @@
 
+.SummonerPage{
+    background-color: black;
+    min-height: 100vh;
+    color: hwb(0 100% 0%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40px;
+    
+
+}
+
+.ProfileIconCard img{
+    border: 1px solid white;
+    border-radius: 20px;
+    position: relative;
+
+    
+}
+.SummonerLevel{
+    position: absolute;
+    border: 5px solid gray;
+    border-radius: 10px;
+}
+
+.profileRight{
+    margin-top: 100px;
+}
+
+
 
 
 
 .profileCard{
-    display: flex;
+    
     border: 5px solid #fff;
-}
-
-.SummonerPage{
-    background-color: black;
-    min-height: 100vh;
-    color: white;
-
+    margin-top: 250px;
+    border-radius: 10px;
 }
 
 .Matches{
-    margin-top: 100px;
+    margin-top: 500px;
 }
+
