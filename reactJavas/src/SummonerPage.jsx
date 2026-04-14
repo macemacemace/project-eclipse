@@ -81,22 +81,40 @@ const SummonerPage = () =>{
     <div className="SummonerPage">
     <div className="profileCard">
 
+    <div className="profileLeft">
     <div className="ProfileIconCard">
-      <img src={` https://ddragon.leagueoflegends.com/cdn/16.5.1/img/profileicon/${summonerData?.data5?.profileIconId}.png`} alt="icon" style={{width: '50px', height:'50px'}} />
+      <img src={` https://ddragon.leagueoflegends.com/cdn/16.5.1/img/profileicon/${summonerData?.data5?.profileIconId}.png`} alt="icon" style={{width: '75px', height:'75px'}} />
       <div className="SummonerLevel">
         {summonerData?.data5?.summonerLevel}</div>
-    </div> {/* end of profile icon div*/}
+
+        </div>
+      <div className="SummonerName">
+        <div>{summonerData?.data?.gameName}</div>
+    <div>#{summonerData?.data?.tagLine}</div>
+     
+     </div>
+
+     </div>
+
+     <div className="divider"></div>
 
 
-    <div className="profileRight">
-    <div>{summonerData?.data?.gameName}</div>
-    <div>{summonerData?.data?.tagLine}</div>
-    <div>{summonerData?.data2?.[0]?.tier}</div>
+    <div className="ProfileMiddle">
+    <div className="ProfileRank">
+    <div className="RankImage" >
+    <img src={`https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-${summonerData?.data2?.[0]?.tier?.toLowerCase()}.png`} alt="rank emblem"  />
+     <div>{summonerData?.data2?.[0]?.tier}</div>
     <div>{summonerData?.data2?.[0]?.rank}</div>
-    <img src={`https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-${summonerData?.data2?.[0]?.tier?.toLowerCase()}.png`} alt="rank emblem" style={{height: '80px', width: 'auto'}} />
+    </div>
+
+    </div>
+    </div>
+
+    <div className="WinsLosses">
+
     <div>W:{summonerData?.data2?.[0]?.wins}</div>
     <div>L:{summonerData?.data2?.[0]?.losses}</div>
-    <div>Icon:{summonerData?.data5?.profileIconId}</div>
+    
         </div>
      
      
