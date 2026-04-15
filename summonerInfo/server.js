@@ -16,9 +16,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     try{
         const name = req.params.name;
         const tag = req.params.tag;
-        const region = req.params.region;
-
-       
+        
 
         const regionMap={
             eun1: "europe",
@@ -39,6 +37,15 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
 
 
         }
+
+        const region = req.params.region.toLowerCase();
+
+       if(!regionMap[region]){
+        return res.status(400).json({
+            error: "Invalid region",
+             received: region
+        })
+       }
     
 
     console.log(apiKey);
