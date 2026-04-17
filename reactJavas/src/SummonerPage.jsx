@@ -100,11 +100,17 @@ const SummonerPage = () =>{
 
 
     <div className="ProfileMiddle">
-    <div className="ProfileRank">
+    
     <div className="RankImage" >
     <img src={`https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-${summonerData?.data2?.[0]?.tier?.toLowerCase()}.png`} alt="rank emblem"  />
+     </div>
+
+     <div className="ProfileRank">
      <div>{summonerData?.data2?.[0]?.tier}</div>
-    <div>{summonerData?.data2?.[0]?.rank}</div>
+     <div className="LpAndTier">
+    <div>&nbsp;{summonerData?.data2?.[0]?.rank} &nbsp;</div>
+    <div> - {summonerData?.data2?.[0]?.leaguePoints} </div>
+    <div>&nbsp; LP</div>
     </div>
 
     </div>
@@ -137,7 +143,7 @@ const SummonerPage = () =>{
        <div>tag:{match.riotIdTagLinesArray[playerIndex]}</div>
       <div>Champ name:{match.championsArray[playerIndex]}</div>
       <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/champion/${match.championsArray[playerIndex]}.png`} alt="champ icon"  style={{width: '50px', height: '50px'}}/>
-      
+      console.log()
       <div style={{display: 'flex'}}>
         <div>KDA:{match.playerKillsArray[playerIndex]}/</div>
         <div>{match.playerDeathsArray[playerIndex]}/</div>

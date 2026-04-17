@@ -71,6 +71,7 @@
 .ProfileMiddle{
     padding-left: 100px;
     padding-right: 100px;
+    display: flex;
 }
 .RankImage {
     width: 150px;
@@ -82,12 +83,24 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
-    transform: scale(1.8);
+    transform: scale(4.5);
     
+}
+
+.ProfileRank{
+    
+    padding-left: 40px;
+    padding-top: 25px;
+    align-items: center;
+}
+.LpAndTier{
+    display: flex;
+    align-items: center;
 }
 
 
 .WinsLosses{
+    padding-right: 150px;
     
 }
 
