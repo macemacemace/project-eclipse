@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel&display=swap');
+
 
 .SummonerPage{
     background-color: black;
@@ -56,63 +58,118 @@
     text-align: center;
     justify-content: center;
     padding-bottom: 10px;
+    gap: 5px;
     
 
+}
+.tag{
+    color: #727272;
 }
 
 .divider{
     border-left: 1px solid #444;
     height: 100px;
     align-self: center;
-    padding-left: 10px;
+    padding-left: 20px;
 }
 
 
-.ProfileMiddle{
+.ProfileMiddle {
     padding-left: 100px;
     padding-right: 100px;
     display: flex;
+    align-items: center;
+    gap: 20px;
 }
+
 .RankImage {
     width: 150px;
     height: 150px;
     overflow: hidden;
 }
 
-.RankImage img{
+.RankImage img {
     width: 100%;
     height: 100%;
     object-fit: contain;
     transform: scale(4.5);
-    
 }
 
-.ProfileRank{
-    
-    padding-left: 40px;
-    padding-top: 25px;
+.RankInfo {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+    gap: 6px;
 }
-.LpAndTier{
+
+.RankTier {
     display: flex;
     align-items: center;
+    gap: 6px;
+    font-size: 18px;
 }
 
+.RankNumeral {
+    
+    font-size: 18px;
+}
+
+.RankLp {
+    font-size: 14px;
+    color: #727272;
+    padding-right: 10px;
+}
+.Season{
+    color: #727272;
+    padding-right: 5px;
+}
+
+.divider2{
+    border-left: 1px solid #444;
+    height: 100px;
+    align-self: center;
+    padding-left: 20px;
+}
+
+.ProfileRight{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-right: 50px;
+    
+}
+
+.Wins{
+    color: rgb(93, 191, 93);
+
+}
+.Losses{
+    color: rgb(211, 67, 67);
+}
 
 .WinsLosses{
-    padding-right: 150px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding-top: 5px;
+    font-size: 20px;
     
+}
+.Winrate{
+    font-size: 30px;
 }
 
 
 .profileCard{
     display: flex;
-    border: 5px solid #fff;
+    border: 5px solid #9e9ebb;
     margin-top: 250px;
     border-radius: 10px;
+    background-color: #0f1923;
 }
 
 .Matches{
-    margin-top: 500px;
+    margin-top: 100px;
 }
 

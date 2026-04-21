@@ -133,6 +133,8 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
          const playerShard1Array = [];
           const playerShard2Array = [];
             const playerShard3Array = []; 
+        const playerLpArray = [];
+        
             
             
 

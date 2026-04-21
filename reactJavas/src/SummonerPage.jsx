@@ -90,7 +90,7 @@ const SummonerPage = () =>{
         </div>
       <div className="SummonerName">
         <div>{summonerData?.data?.gameName}</div>
-    <div>#{summonerData?.data?.tagLine}</div>
+    <div className="tag">#{summonerData?.data?.tagLine}</div>
      
      </div>
 
@@ -100,27 +100,39 @@ const SummonerPage = () =>{
 
 
     <div className="ProfileMiddle">
+
+  <div className="RankImage">
+    <img
+      src={`https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-${summonerData?.data2?.[0]?.tier?.toLowerCase()}.png`}
+      alt="rank emblem"
+    />
+  </div>
+
+  <div className="RankInfo">
+    <div className="RankTier">
+      <span>{summonerData?.data2?.[0]?.tier}</span>
+      <span className="RankNumeral">{summonerData?.data2?.[0]?.rank}</span>
+    </div>
+    <div className="RankLp">
+      {summonerData?.data2?.[0]?.leaguePoints} LP
+    </div>
+    <div className="Season">Season 2026</div>
+  </div>
+
+</div>
+
+<div className="divider2"></div>
+
+    <div className="ProfileRight">
+
     
-    <div className="RankImage" >
-    <img src={`https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-${summonerData?.data2?.[0]?.tier?.toLowerCase()}.png`} alt="rank emblem"  />
-     </div>
-
-     <div className="ProfileRank">
-     <div>{summonerData?.data2?.[0]?.tier}</div>
-     <div className="LpAndTier">
-    <div>&nbsp;{summonerData?.data2?.[0]?.rank} &nbsp;</div>
-    <div> - {summonerData?.data2?.[0]?.leaguePoints} </div>
-    <div>&nbsp; LP</div>
+    <div className="Winrate">
+      {((summonerData?.data2?.[0]?.wins / (summonerData?.data2?.[0]?.wins + summonerData?.data2?.[0]?.losses)) * 100).toFixed(0)}%
+        </div>
+        <div className="WinsLosses">
+    <div className="Wins">{summonerData?.data2?.[0]?.wins}W</div>
+    <div className="Losses">{summonerData?.data2?.[0]?.losses}L</div>
     </div>
-
-    </div>
-    </div>
-
-    <div className="WinsLosses">
-
-    <div>W:{summonerData?.data2?.[0]?.wins}</div>
-    <div>L:{summonerData?.data2?.[0]?.losses}</div>
-    
         </div>
      
      
@@ -129,7 +141,7 @@ const SummonerPage = () =>{
 
     </div>  {/*end of profile card*/}
 
-    
+    <div>Recent Matches</div>
     <div className="Matches">
     {summonerData?.matchesArray.map((match,index) => (
       <div>
