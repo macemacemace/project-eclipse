@@ -76,6 +76,8 @@ const SummonerPage = () =>{
       }
      }
   }
+
+  const roles = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Top', 'Jungle', 'Mid', 'ADC', 'Support'];
    return(
     <div className="SummonerPage">
     <div className="profileCard">
@@ -150,19 +152,17 @@ const SummonerPage = () =>{
   return (
     <div key={index} className="matchCard">
       
-    
+       <div>{match.winningTeam[playerIndex] ? "Win" : "Loss"}</div>
       
-      <div>Game Duration:{match.gameDuration}</div>
+      <div>{roles[playerIndex]}</div>
 
       
 
 
         
-      <div>---------------Summoner Name:{match.riotIdGameNamesArray[playerIndex]}-----------------------</div>
-       <div>tag:{match.riotIdTagLinesArray[playerIndex]}</div>
-      <div>Champ name:{match.championsArray[playerIndex]}</div>
+      <div>{match.riotIdGameNamesArray[playerIndex]}</div>
       <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/champion/${match.championsArray[playerIndex]}.png`} alt="champ icon"  style={{width: '50px', height: '50px'}}/>
-      console.log()
+      
       <div style={{display: 'flex'}}>
         <div>KDA:{match.playerKillsArray[playerIndex]}/</div>
         <div>{match.playerDeathsArray[playerIndex]}/</div>
@@ -173,23 +173,9 @@ const SummonerPage = () =>{
       <div>DamageDealt:{match.damageDealtArray[playerIndex]}</div>
       <div>Key stone:{match.keyStonesArray[playerIndex]}</div>
       <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyStonesArray[playerIndex], runesData)?.icon}`} alt = "keystone"/>
-      <div>Primary rune 1:{match.keyRune1Array[playerIndex]}</div>
-       <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune1Array[playerIndex], runesData)?.icon}`} alt = "keystone1"/>
-      <div>Primary rune 2:{match.keyRune2Array[playerIndex]}</div>
-       <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune2Array[playerIndex], runesData)?.icon}`} alt = "keystone2"/>
-      <div>Primary rune 3:{match.keyRune3Array[playerIndex]}</div>
-      <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune3Array[playerIndex], runesData)?.icon}`} alt = "keystone3"/>
-      <div>second rune tree:{match.secondaryRuneName[playerIndex]}</div>
-      <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRuneName[playerIndex], runesData)?.icon}`} alt = "secondary tree"/>
-      <div>first secondary rune:{match.secondaryRune1Array[playerIndex]}</div>
-      <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRune1Array[playerIndex], runesData)?.icon}`} alt = "keystone2"/>
-    <div>second secondary rune:{match.secondaryRune2Array[playerIndex]}</div>
-    <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRune2Array[playerIndex], runesData)?.icon}`} alt = "keystone2"/>
-    <div>first shard:{match.playerShard1Array[playerIndex]}</div>
-    <div>second shard:{match.playerShard2Array[playerIndex]}</div>
-    <div>third shard:{match.playerShard3Array[playerIndex]}</div>
+      
       <div>CS:{match.minionKillsArray[playerIndex]}</div>
-      <div>Level:{match.playerLevelArray[playerIndex]}</div>
+    
 
       
       <div>first item:{match.playerBuildsArray0[playerIndex]}</div>
@@ -214,7 +200,7 @@ const SummonerPage = () =>{
         <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/spell/${spellData && getSpellName(match.summoner2Array[playerIndex], spellData)?.id}.png`} />
 
 
-      <div>did he win?{match.winningTeam[playerIndex] ? "Win" : "Loss"}</div>
+     <div>Game Duration:{match.gameDuration}</div>
         
         </div> 
        
