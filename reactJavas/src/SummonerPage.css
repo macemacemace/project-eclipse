@@ -179,10 +179,43 @@
 }
 
 .matchCard{
-
-    border: 5px solid #9e9ebb;
+    display: flex;
+    border: 2px solid #9e9ebb;
     border-radius: 10px;
     background-color: #0f1923;
     gap: 10px;
 }
 
+.matchCard.win{
+    border-left:  4px solid rgb(86, 179, 86);
+}
+
+.matchCard.loss{
+    border-left: 4px solid rgb(196, 85, 85);
+}
+
+.WinLoss.win{
+    color: rgb(59, 200, 59);
+    background-color: rgb(65, 80, 65);
+    padding: 4px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.WinLoss.loss{
+    color:rgb(207, 31, 31) ;
+    background-color: rgb(142, 86, 86);
+     padding: 4px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.KeyStone{
+    height: 50px;
+    width: auto;
+}
