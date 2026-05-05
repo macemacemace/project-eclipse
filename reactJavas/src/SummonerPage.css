@@ -184,38 +184,118 @@
     border-radius: 10px;
     background-color: #0f1923;
     gap: 10px;
+    align-items: center;
+    padding: 8px;
 }
 
 .matchCard.win{
-    border-left:  4px solid rgb(86, 179, 86);
+    border-left:  4px solid rgb(0, 200, 150);
 }
 
 .matchCard.loss{
-    border-left: 4px solid rgb(196, 85, 85);
+    border-left: 4px solid rgb(200, 60, 60);
 }
 
 .WinLoss.win{
-    color: rgb(59, 200, 59);
-    background-color: rgb(65, 80, 65);
+    width: 50px;
+    color: rgb(0, 200, 150);
+    background-color: rgb(30, 60, 45);
     padding: 4px 10px;
-    border-radius: 20px;
+    border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
+    padding-right: 4px 20px;
     
 }
 
 .WinLoss.loss{
-    color:rgb(207, 31, 31) ;
-    background-color: rgb(142, 86, 86);
+    width: 50px;
+    color:rgb(220, 80, 80) ;
+    background-color: rgb(80, 30, 30);
      padding: 4px 10px;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
+    align-self: center;
 }
 
 .KeyStone{
-    height: 50px;
+    height: 30px;
     width: auto;
 }
+
+.Summoner1{
+    height: 30px;
+    width: auto;
+
+}
+.Summoner2{
+    height: 30px;
+    width: auto;
+}
+.Summoners{
+    display: flex;
+    flex-direction: column;
+}
+
+.itemSlots{
+    display: flex;
+    gap: 3px;
+    align-items: center;
+}
+
+
+.itemSlot{
+width: 32px;
+height: auto;
+border: 1px solid #9e9ebb;
+border-radius: 4px;
+background-color: #1a2330;
+overflow: hidden;
+
+
+}
+.itemSlot img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+}
+
+.itemSlot.ward{
+    width: 22px;
+    height: auto;
+}
+
+.GameStats{
+    padding-left: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Role{
+    color: #8aa8b4;
+}
+
+.Minions{
+    display: flex;
+    gap: 2px;
+}
+
+.csPerMin{
+    color: #8aa8b4;
+}
+
+.KDA{
+    color: #8aa8b4;
+}
+
+.GameDuration{
+    color: rgb(160, 175, 190);
+}
+
+

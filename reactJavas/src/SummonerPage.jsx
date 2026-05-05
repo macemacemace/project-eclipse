@@ -77,8 +77,12 @@ const SummonerPage = () =>{
      }
   }
 
-  const roles = ['Top', 'Jungle', 'Mid', 'ADC', 'Support', 'Top', 'Jungle', 'Mid', 'ADC', 'Support'];
-   return(
+  
+  const roles = ['Top', 'Jungle', 'Mid', 'Bottom', 'Support', 'Top', 'Jungle', 'Mid', 'Bottom', 'Support'];
+  
+   
+  
+  return(
     <div className="SummonerPage">
     <div className="profileCard">
 
@@ -149,6 +153,26 @@ const SummonerPage = () =>{
     (playerName, i) => playerName.toLowerCase() === name.toLowerCase() && match.riotIdTagLinesArray[i].toLowerCase() === tag.toLowerCase()
   )
 
+  const kills = match.playerKillsArray[playerIndex];
+        const death = match.playerDeathsArray[playerIndex];
+        const assists = match.playerAssistsArray[playerIndex];
+
+
+        const kda = death === 0
+        
+        ? "Perfect"
+
+        :((kills + assists) /death).toFixed(1);
+
+
+      const gameDur = match.gameDuration;
+
+      const gameDur1 = (gameDur / 60).toFixed(0);
+
+      const Cs = match.minionKillsArray[playerIndex];
+
+      const csPerMin = (Cs / gameDur1).toFixed(1);
+
   return (
     <div key={index} className={match.winningTeam[playerIndex] ? "matchCard win" : "matchCard loss"}>
       
@@ -165,48 +189,65 @@ const SummonerPage = () =>{
 
         
       
-      <img className="ChampIcon" src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/champion/${match.championsArray[playerIndex]}.png`} alt="champ icon"  style={{width: '50px', height: '50px'}}/>
+      <img className="ChampIcon" src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/champion/${match.championsArray[playerIndex]}.png`} alt="champ icon"  style={{width: '60px', height: '60px'}}/>
+      <div className="Summoners">
       <img className= "Summoner1" src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/spell/${spellData && getSpellName(match.summoner1Array[playerIndex], spellData)?.id}.png`} />
       <img className="Summoner2" src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/spell/${spellData && getSpellName(match.summoner2Array[playerIndex], spellData)?.id}.png`} />
-      
-      <div>{roles[playerIndex]}</div>
+      </div>
+      <div className="Role">{roles[playerIndex]}</div>
 
+
+
+
+      <div className="GameStats">
       <div style={{display: 'flex'}}>
-        <div>KDA:{match.playerKillsArray[playerIndex]}/</div>
+        <div>{match.playerKillsArray[playerIndex]}/</div>
         <div>{match.playerDeathsArray[playerIndex]}/</div>
         <div>{match.playerAssistsArray[playerIndex]}</div>
-        
+
+       
+       
+
         </div>
       
-      <div>{match.damageDealtArray[playerIndex]}</div>
+       <div className="KDA">{kda} KDA</div>
       
       
+      <div className="Minions">
+      <div>CS {match.minionKillsArray[playerIndex]}</div>
+    <div className="csPerMin">({csPerMin})</div>
+    </div>
+</div>
       
-      <div>CS:{match.minionKillsArray[playerIndex]}</div>
-    
+     <div className="itemSlots">
+  {[match.playerBuildsArray0[playerIndex],
+    match.playerBuildsArray1[playerIndex],
+    match.playerBuildsArray2[playerIndex],
+    match.playerBuildsArray3[playerIndex],
+    match.playerBuildsArray4[playerIndex],
+    match.playerBuildsArray5[playerIndex]
+  ].map((item, i) => (
+    <div key={i} className="itemSlot">
+      {item !== 0
+        ? <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${item}.png`} alt="item" />
+        : null}
+    </div>
+  ))}
+</div>
 
-      
-      
-      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray0[playerIndex]}.png`} alt="first item" style ={{width: '50px', height: '50px'}}/>
-    
-      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray1[playerIndex]}.png`} alt="second item" style ={{width: '50px', height: '50px'}}/>
-      
-      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray2[playerIndex]}.png`} alt="third item" style ={{width: '50px', height: '50px'}}/>
-      
-      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray3[playerIndex]}.png`} alt="forth item" style ={{width: '50px', height: '50px'}}/>
-      
-      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray4[playerIndex]}.png`} alt="fifth item" style ={{width: '50px', height: '50px'}}/>
-      
-      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray5[playerIndex]}.png`} alt="sixth item" style ={{width: '50px', height: '50px'}}/>
-      
-      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray6[playerIndex]}.png`} alt="seveth item" style ={{width: '50px', height: '50px'}}/>
-
+<div className="itemSlot ward">
+  {match.playerBuildsArray6[playerIndex] !== 0
+    ? <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray6[playerIndex]}.png`} alt="ward" />
+    : null}
+</div>
         
       
    
 
 
-     <div>{match.gameDuration}</div>
+     <div className="GameDuration">{gameDur1}m</div>
+
+     
         
         </div> 
        
