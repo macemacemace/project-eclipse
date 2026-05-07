@@ -88,7 +88,7 @@ const SummonerPage = () =>{
 
     <div className="profileLeft">
     <div className="ProfileIconCard">
-      <img src={` https://ddragon.leagueoflegends.com/cdn/16.5.1/img/profileicon/${summonerData?.data5?.profileIconId}.png`} alt="icon" style={{width: '75px', height:'75px'}} />
+      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/profileicon/${summonerData?.data5?.profileIconId}.png`} alt="icon" style={{width: '75px', height:'75px'}} />
       <div className="SummonerLevel">
         {summonerData?.data5?.summonerLevel}</div>
 
