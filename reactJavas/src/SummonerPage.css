@@ -251,11 +251,12 @@
 
 .itemSlot{
 width: 32px;
-height: auto;
+height: 32px;
 border: 1px solid #9e9ebb;
 border-radius: 4px;
 background-color: #1a2330;
 overflow: hidden;
+flex-shrink: 0;
 
 
 }
@@ -276,10 +277,12 @@ overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-right: 10px;
 }
 
 .Role{
     color: #8aa8b4;
+    min-width: 60px;
 }
 
 .Minions{
@@ -297,6 +300,27 @@ overflow: hidden;
 
 .GameDuration{
     color: rgb(160, 175, 190);
+    margin-left: auto;
+    padding-left: 10px;
+}
+
+.Recent{
+    color : #8aa8b4;
+    font-size: 20px;
+}
+
+
+.dropDown{
+    color: #a0afbe;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 0 8px;
+    transition: transform 0.3s ease;
+    
+}
+
+.dropDown.open{
+    transform: rotate(180deg);
 }
 
 

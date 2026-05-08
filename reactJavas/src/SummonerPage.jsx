@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams} from "react-router-dom"
 import {useState} from "react"
 import './SummonerPage.css'
+import MatchCard from './MatchCard'
 
 const SummonerPage = () =>{
 
@@ -80,15 +81,18 @@ const SummonerPage = () =>{
   
   const roles = ['Top', 'Jungle', 'Mid', 'Bottom', 'Support', 'Top', 'Jungle', 'Mid', 'Bottom', 'Support'];
   
-   
+   if (!summonerData || !spellData || !runesData) {
+  return <div>Loading...</div>
+}
   
+console.log(summonerData?.data5)
   return(
     <div className="SummonerPage">
     <div className="profileCard">
 
     <div className="profileLeft">
     <div className="ProfileIconCard">
-      <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/profileicon/${summonerData?.data5?.profileIconId}.png`} alt="icon" style={{width: '75px', height:'75px'}} />
+      <img src={`https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/profile-icons/${summonerData.data5.profileIconId}.jpg`} alt="icon" style={{width: '75px', height:'75px'}} />
       <div className="SummonerLevel">
         {summonerData?.data5?.summonerLevel}</div>
 
@@ -145,111 +149,26 @@ const SummonerPage = () =>{
 
 
     </div>  {/*end of profile card*/}
-<div>Recent Matches</div>
+
     <div className="Matches">
+      <div className="Recent">Recent Matches</div>
      {summonerData?.matchesArray.map((match, index) => {
-      console.log(name, tag, match.riotIdGameNamesArray[0], match.riotIdTagLinesArray[0])
   const playerIndex = match.riotIdGameNamesArray.findIndex(
     (playerName, i) => playerName.toLowerCase() === name.toLowerCase() && match.riotIdTagLinesArray[i].toLowerCase() === tag.toLowerCase()
   )
 
-  const kills = match.playerKillsArray[playerIndex];
-        const death = match.playerDeathsArray[playerIndex];
-        const assists = match.playerAssistsArray[playerIndex];
 
-
-        const kda = death === 0
-        
-        ? "Perfect"
-
-        :((kills + assists) /death).toFixed(1);
-
-
-      const gameDur = match.gameDuration;
-
-      const gameDur1 = (gameDur / 60).toFixed(0);
-
-      const Cs = match.minionKillsArray[playerIndex];
-
-      const csPerMin = (Cs / gameDur1).toFixed(1);
 
   return (
-    <div key={index} className={match.winningTeam[playerIndex] ? "matchCard win" : "matchCard loss"}>
-      
-       <div className={match.winningTeam[playerIndex] ? "WinLoss win" : "WinLoss loss"}>
-  {match.winningTeam[playerIndex] ? "WIN" : "LOSS"}
-</div>
-
-       
-      
-      
-
-      <img className="KeyStone" src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyStonesArray[playerIndex], runesData)?.icon}`} alt = "keystone"/>
-
-
-        
-      
-      <img className="ChampIcon" src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/champion/${match.championsArray[playerIndex]}.png`} alt="champ icon"  style={{width: '60px', height: '60px'}}/>
-      <div className="Summoners">
-      <img className= "Summoner1" src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/spell/${spellData && getSpellName(match.summoner1Array[playerIndex], spellData)?.id}.png`} />
-      <img className="Summoner2" src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/spell/${spellData && getSpellName(match.summoner2Array[playerIndex], spellData)?.id}.png`} />
-      </div>
-      <div className="Role">{roles[playerIndex]}</div>
-
-
-
-
-      <div className="GameStats">
-      <div style={{display: 'flex'}}>
-        <div>{match.playerKillsArray[playerIndex]}/</div>
-        <div>{match.playerDeathsArray[playerIndex]}/</div>
-        <div>{match.playerAssistsArray[playerIndex]}</div>
-
-       
-       
-
-        </div>
-      
-       <div className="KDA">{kda} KDA</div>
-      
-      
-      <div className="Minions">
-      <div>CS {match.minionKillsArray[playerIndex]}</div>
-    <div className="csPerMin">({csPerMin})</div>
-    </div>
-</div>
-      
-     <div className="itemSlots">
-  {[match.playerBuildsArray0[playerIndex],
-    match.playerBuildsArray1[playerIndex],
-    match.playerBuildsArray2[playerIndex],
-    match.playerBuildsArray3[playerIndex],
-    match.playerBuildsArray4[playerIndex],
-    match.playerBuildsArray5[playerIndex]
-  ].map((item, i) => (
-    <div key={i} className="itemSlot">
-      {item !== 0
-        ? <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${item}.png`} alt="item" />
-        : null}
-    </div>
-  ))}
-</div>
-
-<div className="itemSlot ward">
-  {match.playerBuildsArray6[playerIndex] !== 0
-    ? <img src={`https://ddragon.leagueoflegends.com/cdn/16.5.1/img/item/${match.playerBuildsArray6[playerIndex]}.png`} alt="ward" />
-    : null}
-</div>
-        
-      
-   
-
-
-     <div className="GameDuration">{gameDur1}m</div>
-
-     
-        
-        </div> 
+    <MatchCard
+            key={index}
+            match={match}
+            playerIndex={playerIndex}
+            spellData={spellData}
+            runesData={runesData}
+            getSpellName={getSpellName}
+            getRuneName={getRuneName}
+        />
        
       
       
@@ -260,7 +179,27 @@ const SummonerPage = () =>{
   
 
     
-    {/*<div className="Matches">
+    
+
+   </div>
+
+  </div>
+
+)
+    
+}
+
+
+
+
+
+export default SummonerPage;
+ 
+
+
+ 
+
+{/*<div className="Matches">
     {summonerData?.matchesArray.map((match,index) => (
       <div>
       <div>Game Duration:{match.gameDuration}</div>
@@ -334,21 +273,3 @@ const SummonerPage = () =>{
       
     ))}
     </div> */}
-
-   </div>
-
-  </div>
-
-)
-    
-}
-
-
-
-
-
-export default SummonerPage;
- 
-
-
- 
