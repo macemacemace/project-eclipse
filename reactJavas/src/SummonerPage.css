@@ -169,6 +169,7 @@
     margin-top: 250px;
     border-radius: 10px;
     background-color: #0f1923;
+    
 }
 
 .Matches{
@@ -176,7 +177,7 @@
     flex-direction: column;
     gap: 5px;
     margin-top: 100px;
-    
+    width: 1050px;
 }
 
 .matchCard{
@@ -184,9 +185,9 @@
     border: 2px solid #9e9ebb;
     border-radius: 10px;
     background-color: #0f1923;
-    gap: 10px;
+    gap: 14px;
     align-items: center;
-    padding: 8px;
+    padding: 6px 14px;
     flex-wrap: wrap;
 }
 
@@ -225,17 +226,17 @@
 }
 
 .KeyStone{
-    height: 30px;
+    height: 44px;
     width: auto;
 }
 
 .Summoner1{
-    height: 30px;
+    height: 40px;
     width: auto;
 
 }
 .Summoner2{
-    height: 30px;
+    height: 40px;
     width: auto;
 }
 .Summoners{
@@ -251,8 +252,8 @@
 
 
 .itemSlot{
-width: 32px;
-height: 32px;
+width: 44px;
+height: 44px;
 border: 1px solid #9e9ebb;
 border-radius: 4px;
 background-color: #1a2330;
@@ -269,8 +270,8 @@ flex-shrink: 0;
 }
 
 .itemSlot.ward{
-    width: 22px;
-    height: auto;
+    width: 44px;
+    height: 44px;
 }
 
 .GameStats{
@@ -279,11 +280,14 @@ flex-shrink: 0;
     flex-direction: column;
     align-items: center;
     padding-right: 10px;
+    font-size: 18px;
+    white-space: nowrap;
 }
 
 .Role{
     color: #8aa8b4;
     min-width: 60px;
+    font-size: 18px;
 }
 
 .Minions{
@@ -303,6 +307,7 @@ flex-shrink: 0;
     color: rgb(160, 175, 190);
     margin-left: auto;
     padding-left: 10px;
+    font-size: 18px;
 }
 
 .Recent{
@@ -313,11 +318,11 @@ flex-shrink: 0;
 
 .dropdownBtn{
     color: #a0afbe;
-    font-size: 12px;
+    font-size: 22px;
     cursor: pointer;
     padding: 0 8px;
     transition: transform 0.3s ease;
-    
+
 }
 
 .dropdownBtn.open{
@@ -326,12 +331,17 @@ flex-shrink: 0;
 
 .dropdown {
     width: 100%;
-    background-color: #0a1520;
-    border-top: 1px solid #1e2d3a;
-    padding: 8px 0;
+    flex-basis: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
 }
 
-.dropdown {
+.dropdown.open {
+    max-height: 2000px;
+}
+
+.dropdown.inner {
     background: #0a1520;
     border-top: 1px solid #1e2d3a;
     padding: 6px 0;
@@ -339,7 +349,7 @@ flex-shrink: 0;
 }
 
 .teamLabel {
-    font-size: 11px;
+    font-size: 16px;
     font-weight: 600;
     letter-spacing: 0.5px;
     padding: 6px 14px 4px;
@@ -356,8 +366,8 @@ flex-shrink: 0;
 .playerRow {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 5px 12px;
+    gap: 12px;
+    padding: 10px 16px;
     border-bottom: 1px solid #111d28;
 }
 
@@ -370,16 +380,16 @@ flex-shrink: 0;
 }
 
 .miniChamp {
-    width: 28px;
-    height: 28px;
+    width: 42px;
+    height: 42px;
     border-radius: 4px;
     flex-shrink: 0;
 }
 
 .playerName {
     color: #c8d6e0;
-    font-size: 12px;
-    min-width: 90px;
+    font-size: 15px;
+    min-width: 120px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -392,15 +402,15 @@ flex-shrink: 0;
 
 .playerKda {
     color: #e0eaf0;
-    font-size: 12px;
-    min-width: 65px;
+    font-size: 15px;
+    min-width: 80px;
     text-align: center;
 }
 
 .playerCs {
     color: #a0afbe;
-    font-size: 11px;
-    min-width: 50px;
+    font-size: 14px;
+    min-width: 60px;
 }
 
 .miniItems {
@@ -410,8 +420,8 @@ flex-shrink: 0;
 }
 
 .miniItemSlot {
-    width: 22px;
-    height: 22px;
+    width: 32px;
+    height: 32px;
     border-radius: 3px;
     background: #1e2d3a;
     border: 1px solid #2a3a4a;
@@ -438,8 +448,8 @@ flex-shrink: 0;
 }
 
 .runeKeystone {
-    width: 24px;
-    height: 24px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: #1e2d3a;
     border: 1px solid #2a3a4a;
@@ -448,8 +458,8 @@ flex-shrink: 0;
 }
 
 .runeSm {
-    width: 16px;
-    height: 16px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     background: #1a2a38;
     border: 1px solid #243344;

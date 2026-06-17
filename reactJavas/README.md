@@ -1,16 +1,33 @@
-# React + Vite
+# Eclipse - League of Legends Stats App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A web app for looking up League of Legends summoner profiles and match history, similar to op.gg.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search any summoner by name, tag, and region
+- View rank, winrate, and LP
+- Detailed match history with KDA, CS, items, runes, and summoner spells
+- Full 10-player match breakdown with blue and red team stats
 
-## React Compiler
+## Future Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Champion winrates based on role.
+- Live game viewer with build suggestion, winrate based on match-ups.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend:** React, Vite, React Router
+- **Backend:** Node.js, Express
+- **Data:** Riot Games API, Data Dragon (CDN)
+
+## Screenshots
+
+![App Demo](ezgif-166e63dbe641920c.gif)
+
+## How to Run Locally
+
+1. Clone the repo
+2. Add your Riot API key to the backend
+3. Run the backend: `cd summonerInfo && npm install && npm start`
+4. Run the frontend: `cd reactJavas && npm install && npm run dev`
+5. Open `http://localhost:5173`

@@ -101,10 +101,12 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
 
 
 
-            {isOpen && (
-                <div className="dropdown">
-                    {isOpen && (
-    <div className="dropdown">
+            <div className={`dropdown ${isOpen ? "open" : ""}`}>
+            <div className="dropdown-inner">
+
+
+
+                
         <div className="teamLabel blue">Blue Team</div>
         {Array.from({length: 5}).map((_, i) => (
             <div key={i} className={`playerRow ${i === playerIndex ? "me" : ""}`}>
@@ -175,11 +177,11 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
             )
         })}
     </div>
-)}
+
 
 
                 </div>
-            )}
+            
 
 
     </div>
