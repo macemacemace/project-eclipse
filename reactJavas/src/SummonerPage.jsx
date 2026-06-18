@@ -17,6 +17,7 @@ const SummonerPage = () =>{
   const [spellData, setSpellData] =useState(null);
   const [runesData, setRunesData] = useState(null);
   const [version, setVersion] = useState(null);
+  const [itemData, setItemData] = useState(null)
   useEffect(() => {
     async function fetchData() {
 
@@ -29,7 +30,16 @@ const SummonerPage = () =>{
    const response = await fetch(`http://localhost:3000/summoner/${region}/${name}/${tag}`)
    const spellJson = await fetch(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/summoner.json`);
    const runesJson = await fetch (`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/runesReforged.json`)
+   const itemJson = await fetch(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/item.json`);
+
+
+
+   
+
+   
    if(!response.ok){
+
+
       throw new Error("cant fetch data")
     }
    if (!spellJson.ok){
@@ -42,7 +52,7 @@ const SummonerPage = () =>{
    const runesDataParsed = await runesJson.json();
    const data = await response.json()
    const spellDataParsed = await spellJson.json();
-
+   const itemDataParsed = await itemJson.json();
    
    console.log(spellData)
    console.log(data)
@@ -50,9 +60,10 @@ const SummonerPage = () =>{
    
 
 
-      setSummonerData(data);
+      setSummonerData(data)
       setSpellData(spellDataParsed)
       setRunesData(runesDataParsed)
+      setItemData(itemDataParsed)
 
     }
     fetchData()
@@ -84,10 +95,14 @@ const SummonerPage = () =>{
      }
   }
 
+  function getItemName(itemId, itemData){
+    return itemData.data[itemId]?.name
+}
+
   
   const roles = ['Top', 'Jungle', 'Mid', 'Bottom', 'Support', 'Top', 'Jungle', 'Mid', 'Bottom', 'Support'];
   
-   if (!summonerData || !spellData || !runesData) {
+   if (!summonerData || !spellData || !runesData || !itemData) {
   return <div>Loading...</div>
 }
   
@@ -175,6 +190,8 @@ console.log(summonerData?.data5)
             getSpellName={getSpellName}
             getRuneName={getRuneName}
             version={version}
+            getItemName={getItemName}
+            itemData = {itemData}
         />
        
       

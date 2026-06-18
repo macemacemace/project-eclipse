@@ -1,4 +1,4 @@
-require('dotenv').config({ path: './.env' })
+require('dotenv').config({ path: require('path').join(__dirname, '.env') })
 
 
 const express = require(`express`)
@@ -6,7 +6,7 @@ const cors = require(`cors`)
 const app = express()
 
 app.use(cors({
-    origin: ['http://localhost:5500', `http://127.0.0.1:5500`, `http://localhost:5173`]
+    origin: ['http://localhost:5500', `http://127.0.0.1:5500`, `http://localhost:5173`, `http://localhost:5174`]
 }))
 const apiKey = process.env.RIOT_API_KEY
 
@@ -100,8 +100,9 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     const response4 = await fetch(`https://${regionMap[region]}.api.riotgames.com/lol/match/v5/matches/${data3[i]}?api_key=${apiKey}`)
         
         const data4= await response4.json();
-        
-       
+
+        if(!data4.info || !data4.info.participants) continue;
+
         const gameDuration = data4.info.gameDuration;
         const championsArray = []
          const playerKillsArray = []

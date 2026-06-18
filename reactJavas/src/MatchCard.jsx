@@ -6,7 +6,7 @@ import './SummonerPage.css'
 
 
 
-const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, getRuneName, name, tag, version }) =>{
+const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, getRuneName, name, tag, version, getItemName, itemData }) =>{
 
     const[isOpen, setIsOpen] = useState(false);
   const kills = match.playerKillsArray[playerIndex];
@@ -68,10 +68,14 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
             ].map((item, i) => (
                 <div key={i} className="itemSlot">
                     {item !== 0 && item !== null
-                        ? <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${item}.png`} alt="item"
+
+                    
+                        ? <div className = "tooltip-wrapper" > 
+                        <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${item}.png`} alt="item"/>
                         
-        
-                        />
+                            <span className="tooltip">{getItemName(item, itemData)}</span>
+                        
+                        </div>
                         : null}
                 </div>
             ))}
