@@ -242,6 +242,7 @@
 .Summoners{
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .itemSlots{
@@ -402,7 +403,7 @@ flex-shrink: 0;
 
 .playerKda {
     color: #e0eaf0;
-    font-size: 15px;
+    font-size: 20px;
     min-width: 80px;
     text-align: center;
 }
@@ -501,14 +502,26 @@ flex-shrink: 0;
     transform: translateX(-50%);
     background: #1a2330;
     color: white;
-    padding: 4px 8px;
+    padding: 8px 10px;
     border-radius: 4px;
-    white-space: nowrap;
     font-size: 12px;
     border: 1px solid #2a3a4a;
     z-index: 9999;
     pointer-events: none;
     transition: opacity 0.2s ease;
+    width: 220px;
+    white-space: normal;
+}
+
+.tooltip-name {
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #c89b3c;
+}
+
+.tooltip-desc {
+    color: #a0afbe;
+    line-height: 1.4;
 }
 
 .tooltip-wrapper:hover .tooltip {

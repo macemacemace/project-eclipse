@@ -41,9 +41,20 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
         </div>
         <img className="KeyStone" src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyStonesArray[playerIndex], runesData)?.icon}`} alt="keystone"/>
         <img className="ChampIcon" src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${match.championsArray[playerIndex]}.png`} alt="champ icon" style={{width: '60px', height: '60px'}}/>
+        
         <div className="Summoners">
+            <div className="tooltip-wrapper">
             <img className="Summoner1" src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spellData && getSpellName(match.summoner1Array[playerIndex], spellData)?.id}.png`} />
+            <span className="tooltip">
+        <div className="tooltip-name">{getSpellName(match.summoner1Array[playerIndex], spellData)?.name}</div>
+        <div className="tooltip-desc">{getSpellName(match.summoner1Array[playerIndex], spellData)?.description}</div>
+    </span>
             <img className="Summoner2" src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spellData && getSpellName(match.summoner2Array[playerIndex], spellData)?.id}.png`} />
+            <span className="tooltip">
+        <div className="tooltip-name">{getSpellName(match.summoner2Array[playerIndex], spellData)?.name}</div>
+        <div className="tooltip-desc">{getSpellName(match.summoner2Array[playerIndex], spellData)?.description}</div>
+    </span>
+        </div>
         </div>
         <div className="Role">{roles[playerIndex]}</div>
         <div className="GameStats">
@@ -73,7 +84,10 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                         ? <div className = "tooltip-wrapper" > 
                         <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${item}.png`} alt="item"/>
                         
-                            <span className="tooltip">{getItemName(item, itemData)}</span>
+                            <span className="tooltip">
+                                <div className="tooltip-name">{getItemName(item, itemData).name}</div>
+                                <div className="tooltip-desc">{getItemName(item, itemData).description}</div>
+                            </span>
                         
                         </div>
                         : null}

@@ -96,7 +96,8 @@ const SummonerPage = () =>{
   }
 
   function getItemName(itemId, itemData){
-    return itemData.data[itemId]?.name
+    const item = itemData.data[itemId]
+    return { name: item?.name, description: item?.plaintext }
 }
 
   
