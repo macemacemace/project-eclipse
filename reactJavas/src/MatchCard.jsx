@@ -8,7 +8,17 @@ import './SummonerPage.css'
 
 const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, getRuneName, name, tag, version, getItemName, itemData }) =>{
 
-    const[isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [overflowVisible, setOverflowVisible] = useState(false);
+
+    const handleToggle = () => {
+        if (isOpen) {
+            setOverflowVisible(false);
+            setIsOpen(false);
+        } else {
+            setIsOpen(true);
+        }
+    };
   const kills = match.playerKillsArray[playerIndex];
         const death = match.playerDeathsArray[playerIndex];
         const assists = match.playerAssistsArray[playerIndex];
@@ -49,6 +59,8 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
         <div className="tooltip-name">{getSpellName(match.summoner1Array[playerIndex], spellData)?.name}</div>
         <div className="tooltip-desc">{getSpellName(match.summoner1Array[playerIndex], spellData)?.description}</div>
     </span>
+    </div>
+    <div className="tooltip-wrapper">
             <img className="Summoner2" src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spellData && getSpellName(match.summoner2Array[playerIndex], spellData)?.id}.png`} />
             <span className="tooltip">
         <div className="tooltip-name">{getSpellName(match.summoner2Array[playerIndex], spellData)?.name}</div>
@@ -100,7 +112,7 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                 : null}
         </div>
         <div className="GameDuration">{gameDur1}m</div>
-        <div className={`dropdownBtn ${isOpen ? "open" : ""}`} onClick={() => setIsOpen(!isOpen)}>▼</div>
+        <div className={`dropdownBtn ${isOpen ? "open" : ""}`} onClick={handleToggle}>▼</div>
 
             
 
@@ -119,7 +131,11 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
 
 
 
-            <div className={`dropdown ${isOpen ? "open" : ""}`}>
+            <div
+                className={`dropdown ${isOpen ? "open" : ""}`}
+                style={{ overflow: overflowVisible ? 'visible' : 'hidden' }}
+                onTransitionEnd={() => { if (isOpen) setOverflowVisible(true); }}
+            >
             <div className="dropdown-inner">
 
 
@@ -129,6 +145,22 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
         {Array.from({length: 5}).map((_, i) => (
             <div key={i} className={`playerRow ${i === playerIndex ? "me" : ""}`}>
                 <img className="miniChamp" src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${match.championsArray[i]}.png`} alt="champ"/>
+                <div className="miniSummoners">
+                    <div className="tooltip-wrapper">
+                        <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSpellName(match.summoner1Array[i], spellData)?.id}.png`} alt="spell1"/>
+                        <span className="tooltip">
+                            <div className="tooltip-name">{getSpellName(match.summoner1Array[i], spellData)?.name}</div>
+                            <div className="tooltip-desc">{getSpellName(match.summoner1Array[i], spellData)?.description}</div>
+                        </span>
+                    </div>
+                    <div className="tooltip-wrapper">
+                        <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSpellName(match.summoner2Array[i], spellData)?.id}.png`} alt="spell2"/>
+                        <span className="tooltip">
+                            <div className="tooltip-name">{getSpellName(match.summoner2Array[i], spellData)?.name}</div>
+                            <div className="tooltip-desc">{getSpellName(match.summoner2Array[i], spellData)?.description}</div>
+                        </span>
+                    </div>
+                </div>
                 <div className="playerName">{match.riotIdGameNamesArray[i]}</div>
                 <div className="playerKda">{match.playerKillsArray[i]}/{match.playerDeathsArray[i]}/{match.playerAssistsArray[i]}</div>
                 <div className="playerCs">CS {match.minionKillsArray[i]}</div>
@@ -138,15 +170,30 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                     ].map((item, j) => (
                         <div key={j} className="miniItemSlot">
                             {item !== 0 && item !== null
-                                ? <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${item}.png`} alt=""/>
+                                ? <div className="tooltip-wrapper">
+                                <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${item}.png`} alt=""/>
+                                <span className="tooltip">
+                                    <div className="tooltip-name">{getItemName(item, itemData).name}</div>
+                                    {getItemName(item, itemData).description &&
+                                    <div className="tooltip-desc">{getItemName(item, itemData).description}</div>}
+                                </span>
+                                </div>
                                 : null}
                         </div>
+                        
                     ))}
                 </div>
                 
                 <div className="runes">
+                    <div className="tooltip-wrapper">
     <div className="runeKeystone">
         <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyStonesArray[i], runesData)?.icon}`} alt="keystone"/>
+        <span className="tooltip">
+                 <div className="tooltip-name">{getRuneName(match.keyStonesArray[playerIndex], runesData)?.name}</div>
+        <div className="tooltip-desc">{getRuneName(match.keyStonesArray[playerIndex], runesData)?.shortDesc}</div>   
+
+        </span>
+    </div>
     </div>
     <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune1Array[i], runesData)?.icon}`} alt="rune1"/></div>
     <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune2Array[i], runesData)?.icon}`} alt="rune2"/></div>
@@ -165,6 +212,22 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
             return (
                 <div key={ri} className={`playerRow ${ri === playerIndex ? "me" : ""}`}>
                     <img className="miniChamp" src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${match.championsArray[ri]}.png`} alt="champ"/>
+                    <div className="miniSummoners">
+                        <div className="tooltip-wrapper">
+                            <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSpellName(match.summoner1Array[ri], spellData)?.id}.png`} alt="spell1"/>
+                            <span className="tooltip">
+                                <div className="tooltip-name">{getSpellName(match.summoner1Array[ri], spellData)?.name}</div>
+                                <div className="tooltip-desc">{getSpellName(match.summoner1Array[ri], spellData)?.description}</div>
+                            </span>
+                        </div>
+                        <div className="tooltip-wrapper">
+                            <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${getSpellName(match.summoner2Array[ri], spellData)?.id}.png`} alt="spell2"/>
+                            <span className="tooltip">
+                                <div className="tooltip-name">{getSpellName(match.summoner2Array[ri], spellData)?.name}</div>
+                                <div className="tooltip-desc">{getSpellName(match.summoner2Array[ri], spellData)?.description}</div>
+                            </span>
+                        </div>
+                    </div>
                     <div className="playerName">{match.riotIdGameNamesArray[ri]}</div>
                     <div className="playerKda">{match.playerKillsArray[ri]}/{match.playerDeathsArray[ri]}/{match.playerAssistsArray[ri]}</div>
                     <div className="playerCs">CS {match.minionKillsArray[ri]}</div>
@@ -174,7 +237,15 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                         ].map((item, j) => (
                             <div key={j} className="miniItemSlot">
                                 {item !== 0 && item !== null
-                                    ? <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${item}.png`} alt="item"/>
+                                    ? <div className="tooltip-wrapper">
+                                <img src={`https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${item}.png`} alt="item"/>
+                                <span className="tooltip">
+                                    <div className="tooltip-name">{getItemName(item, itemData).name}</div>
+                                    {getItemName(item, itemData).description &&
+                                    <div className="tooltip-desc">{getItemName(item, itemData).description}</div>}
+                                </span>
+                                </div> 
+                                    
                                     : null}
                             </div>
                         ))}

@@ -347,6 +347,7 @@ flex-shrink: 0;
     border-top: 1px solid #1e2d3a;
     padding: 6px 0;
     width: 100%;
+    overflow: visible;
 }
 
 .teamLabel {
@@ -426,7 +427,7 @@ flex-shrink: 0;
     border-radius: 3px;
     background: #1e2d3a;
     border: 1px solid #2a3a4a;
-    overflow: hidden;
+    overflow: visible;
     flex-shrink: 0;
 }
 
@@ -527,4 +528,14 @@ flex-shrink: 0;
 .tooltip-wrapper:hover .tooltip {
     visibility: visible;
     opacity: 1;
+}
+
+.miniSummoners{
+    display: flex;
+    flex-direction: column;
+
+}
+.miniSummoners img{
+    width: 20px;
+    height: 20px;
 }
