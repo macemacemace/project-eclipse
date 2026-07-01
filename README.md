@@ -22,7 +22,7 @@ A web app for looking up League of Legends summoner profiles and match history, 
 
 ## Screenshots
 
-![App Demo](ezgif-166e63dbe641920c.gif)
+![App Demo](reactJavas/ezgif-166e63dbe641920c.gif)
 
 ## How to Run Locally
 
