@@ -27,7 +27,7 @@ const SummonerPage = () =>{
         setVersion(latestVersion);
       
     
-   const response = await fetch(`http://localhost:3000/summoner/${region}/${name}/${tag}`)
+   const response = await fetch(`https://project-eclipse-5fil.onrender.com/summoner/${region}/${name}/${tag}`)
    const spellJson = await fetch(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/summoner.json`);
    const runesJson = await fetch (`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/runesReforged.json`)
    const itemJson = await fetch(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/item.json`);
@@ -67,7 +67,7 @@ const SummonerPage = () =>{
 
     }
     fetchData()
-  }, [])
+  }, [region, name, tag])
 
   function getSpellName(spellId, spellData){
     return Object.values(spellData.data).find(spell => spell.key == String(spellId))
@@ -193,6 +193,7 @@ console.log(summonerData?.data5)
             version={version}
             getItemName={getItemName}
             itemData = {itemData}
+            region = {region}
         />
        
       
