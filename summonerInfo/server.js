@@ -6,7 +6,7 @@ const cors = require(`cors`)
 const app = express()
 
 app.use(cors({
-    origin: ['http://localhost:5500', `http://127.0.0.1:5500`, `http://localhost:5173`, `http://localhost:5174`]
+    origin: ['http://localhost:5500', `http://127.0.0.1:5500`, `http://localhost:5173`, `http://localhost:5174`, 'https://project-eclipse-theta.vercel.app']
 }))
 const apiKey = process.env.RIOT_API_KEY
 
