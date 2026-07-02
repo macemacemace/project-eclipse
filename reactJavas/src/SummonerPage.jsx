@@ -27,10 +27,11 @@ const SummonerPage = () =>{
         setVersion(latestVersion);
       
     
-   const response = await fetch(`https://project-eclipse-5fil.onrender.com/summoner/${region}/${name}/${tag}`)
+   const response = await fetch(`${import.meta.env.VITE_API_URL}/summoner/${region}/${name}/${tag}`)
    const spellJson = await fetch(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/summoner.json`);
    const runesJson = await fetch (`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/runesReforged.json`)
    const itemJson = await fetch(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/item.json`);
+   
 
 
 
