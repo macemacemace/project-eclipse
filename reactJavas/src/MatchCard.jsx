@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useParams} from "react-router-dom"
+import { useParams, Link} from "react-router-dom"
 import {useState} from "react"
 import './SummonerPage.css'
 
 
 
 
-const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, getRuneName, name, tag, version, getItemName, itemData }) =>{
+const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, getRuneName, name, tag, version, getItemName, itemData, region }) =>{
 
     const [isOpen, setIsOpen] = useState(false);
     const [overflowVisible, setOverflowVisible] = useState(false);
@@ -161,7 +161,19 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                         </span>
                     </div>
                 </div>
-                <div className="playerName">{match.riotIdGameNamesArray[i]}</div>
+
+
+                <Link
+                 className="playerName"
+                 to={`/${region}/${match.riotIdGameNamesArray[i]}/${match.riotIdTagLinesArray[i]}`}
+                 
+                 >
+                    {match.riotIdGameNamesArray[i]}
+                 
+                 
+                 </Link>
+
+
                 <div className="playerKda">{match.playerKillsArray[i]}/{match.playerDeathsArray[i]}/{match.playerAssistsArray[i]}</div>
                 <div className="playerCs">CS {match.minionKillsArray[i]}</div>
                 <div className="miniItems">
@@ -228,7 +240,15 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                             </span>
                         </div>
                     </div>
-                    <div className="playerName">{match.riotIdGameNamesArray[ri]}</div>
+                    <Link
+                 className="playerName"
+                 to={`/${region}/${match.riotIdGameNamesArray[ri]}/${match.riotIdTagLinesArray[ri]}`}
+                 
+                 >
+                    {match.riotIdGameNamesArray[ri]}
+                 
+                 
+                 </Link>
                     <div className="playerKda">{match.playerKillsArray[ri]}/{match.playerDeathsArray[ri]}/{match.playerAssistsArray[ri]}</div>
                     <div className="playerCs">CS {match.minionKillsArray[ri]}</div>
                     <div className="miniItems">

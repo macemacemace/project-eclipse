@@ -3,6 +3,7 @@ import { useParams} from "react-router-dom"
 import {useState} from "react"
 import './SummonerPage.css'
 import MatchCard from './MatchCard'
+import Navbar from './Navbar'
 
 const SummonerPage = () =>{
 
@@ -105,12 +106,23 @@ const SummonerPage = () =>{
   const roles = ['Top', 'Jungle', 'Mid', 'Bottom', 'Support', 'Top', 'Jungle', 'Mid', 'Bottom', 'Support'];
   
    if (!summonerData || !spellData || !runesData || !itemData) {
-  return <div>Loading...</div>
+  return (
+  <div className="loadingScreen">
+    <div className="dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  </div>
+  )
 }
   
 console.log(summonerData?.data5)
   return(
+    
     <div className="SummonerPage">
+      <Navbar />
     <div className="profileCard">
 
     <div className="profileLeft">
@@ -210,8 +222,9 @@ console.log(summonerData?.data5)
 
    </div>
 
-  </div>
+  
 
+</div>
 )
     
 }
