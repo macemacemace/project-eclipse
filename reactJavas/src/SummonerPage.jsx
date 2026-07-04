@@ -118,6 +118,8 @@ const SummonerPage = () =>{
   )
 }
   
+const soloQueue = summonerData?.data2?.find(q => q.queueType === 'RANKED_SOLO_5x5')
+
 console.log(summonerData?.data5)
   return(
     
@@ -147,18 +149,18 @@ console.log(summonerData?.data5)
 
   <div className="RankImage">
     <img
-      src={`https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-${summonerData?.data2?.[0]?.tier?.toLowerCase()}.png`}
+      src={`https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-${soloQueue?.tier?.toLowerCase()}.png`}
       alt="rank emblem"
     />
   </div>
 
   <div className="RankInfo">
     <div className="RankTier">
-      <span>{summonerData?.data2?.[0]?.tier}</span>
-      <span className="RankNumeral">{summonerData?.data2?.[0]?.rank}</span>
+      <span>{soloQueue?.tier}</span>
+      <span className="RankNumeral">{soloQueue?.rank}</span>
     </div>
     <div className="RankLp">
-      {summonerData?.data2?.[0]?.leaguePoints} LP
+      {soloQueue?.leaguePoints} LP
     </div>
     <div className="Season">Season 2026</div>
   </div>
@@ -171,11 +173,11 @@ console.log(summonerData?.data5)
 
     
     <div className="Winrate">
-      {((summonerData?.data2?.[0]?.wins / (summonerData?.data2?.[0]?.wins + summonerData?.data2?.[0]?.losses)) * 100).toFixed(0)}%
+      {((soloQueue?.wins / (soloQueue?.wins + soloQueue?.losses)) * 100).toFixed(0)}%
         </div>
         <div className="WinsLosses">
-    <div className="Wins">{summonerData?.data2?.[0]?.wins}W</div>
-    <div className="Losses">{summonerData?.data2?.[0]?.losses}L</div>
+    <div className="Wins">{soloQueue?.wins}W</div>
+    <div className="Losses">{soloQueue?.losses}L</div>
     </div>
         </div>
      
