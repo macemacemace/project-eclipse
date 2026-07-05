@@ -3,6 +3,9 @@ require('dotenv').config({ path: require('path').join(__dirname, '.env') })
 
 const express = require(`express`)
 const cors = require(`cors`)
+const { execFile } = require('child_process')
+const util = require('util')
+const execFilePromise = util.promisify(execFile)
 const app = express()
 
 app.use(cors({
@@ -52,13 +55,15 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
              received: region
         })
        }
+
+       
     
 
-    console.log(apiKey);
+    
         
     const response = await fetch(`https://${regionMap[region]}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${name}/${tag}?api_key=${apiKey}`)
     
-    console.log(apiKey)
+  
    
     if(!response.ok){
         const errData = await response.json();
@@ -277,7 +282,71 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     catch(error){
         console.error(error);
     }
+
+    
+
+
+
+
 })
+
+app.get('/champions', async (req,res) => {
+
+        const responsePatch = await fetch(`https://ddragon.leagueoflegends.com/api/versions.json`)
+
+        if(!responsePatch.ok){
+        const errData = await responsePatch.json();
+        console.log(errData);
+        throw new Error("cant fetch latest patch");
+    }
+
+        const patchData = await responsePatch.json();
+        const latestPatch = patchData[0];
+       
+
+        const split = latestPatch.split(".");
+        
+
+        split.pop();
+
+        const patchFormated = split.join("_");
+
+        let champData;
+
+        try {
+            const { stdout } = await execFilePromise('curl', [
+                '-s',
+                '-f',
+                '-H', 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                `https://stats2.u.gg/lol/1.5/champion_ranking/world/${patchFormated}/ranked_solo_5x5/emerald_plus/1.5.0.json`
+            ], { maxBuffer: 10 * 1024 * 1024 });
+
+            champData = JSON.parse(stdout);
+        }
+        catch (error) {
+            console.log("patch " + patchFormated + " not on u.gg yet, fetching previous patch");
+
+            const latestPatchBackup = patchData[1];
+
+            const split1 = latestPatchBackup.split(".");
+
+            split1.pop();
+
+            const patchFormated1 = split1.join("_");
+
+            const { stdout } = await execFilePromise('curl', [
+                '-s',
+                '-f',
+                '-H', 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                `https://stats2.u.gg/lol/1.5/champion_ranking/world/${patchFormated1}/ranked_solo_5x5/emerald_plus/1.5.0.json`
+            ], { maxBuffer: 10 * 1024 * 1024 });
+
+            champData = JSON.parse(stdout);
+        }
+
+        res.send(champData);
+       
+       })
 
 
 
