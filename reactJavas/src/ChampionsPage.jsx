@@ -72,8 +72,12 @@ const ChampionsPage = () => {
             const champ = getChampName(row[0], championList);
             return (
               <div key = {index}>
+                {champ && <img src = 
+                {`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champ.id}.png`}
+                alt="" />}
                 {champ?.name} - {((row[2] / row[3]) * 100).toFixed(1)}%
               </div>
+              
             )
 
         })}
