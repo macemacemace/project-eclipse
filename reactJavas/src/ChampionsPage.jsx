@@ -19,8 +19,22 @@ const ChampionsPage = () => {
         setVersion(latestVersion);
 
 
+        const split = latestVersion.split(".");
+        split.pop();
+        const patchFormated = split.join("_");
 
-        const responseStats = await fetch(`${import.meta.env.VITE_API_URL}/champions`)
+        let responseStats = await fetch(`https://stats2.u.gg/lol/1.5/champion_ranking/world/${patchFormated}/ranked_solo_5x5/emerald_plus/1.5.0.json`)
+
+        if(!responseStats.ok){
+            console.log("patch " + patchFormated + " not on u.gg yet, fetching previous patch");
+
+            const split1 = versions[1].split(".");
+            split1.pop();
+            const patchFormated1 = split1.join("_");
+
+            responseStats = await fetch(`https://stats2.u.gg/lol/1.5/champion_ranking/world/${patchFormated1}/ranked_solo_5x5/emerald_plus/1.5.0.json`)
+        }
+
         const responseChampList = await fetch(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/champion.json`)
 
         if(!responseStats.ok){
@@ -60,7 +74,11 @@ const ChampionsPage = () => {
   )
 }
 
-
+let sum = 0
+for (let i = 0; i < champData[0].adc.length; i++) {
+  sum = sum + champData[0].adc[i][3];
+  
+}
 
     return (
        
