@@ -77,14 +77,15 @@ const ChampionsPage = () => {
 let sum = 0
 for (let i = 0; i < champData[0].adc.length; i++) {
   sum = sum + champData[0].adc[i][3];
-  
+
 }
 
+const totalMatches = sum/2;
     return (
        
     <div style={{backgroundColor: 'black', minHeight: '100vh', color: 'white'}}>
         <Navbar />
-        {champData[0].adc.filter(row => row[3] > 500)
+        {champData[0].adc.filter(row => row[3] > 1500)
                          .sort((a, b) => (b[2] / b[3]) - (a[2] / a[3]))
                          .map((row, index) =>{
             const champ = getChampName(row[0], championList);
@@ -93,7 +94,7 @@ for (let i = 0; i < champData[0].adc.length; i++) {
                 {champ && <img src = 
                 {`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champ.id}.png`}
                 alt="" />}
-                {champ?.name} - {((row[2] / row[3]) * 100).toFixed(1)}%
+                {champ?.name} - {((row[2] / row[3]) * 100).toFixed(1)}% - {((row[3] / totalMatches) * 100).toFixed(1)}% - {row[3].toLocaleString()}
               </div>
               
             )
