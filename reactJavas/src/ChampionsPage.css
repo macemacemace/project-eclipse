@@ -1,0 +1,25 @@
+.ChampionsPage {
+    background-color: black;
+    min-height: 100vh;
+    color: white;
+    padding-top: 80px;
+}
+
+.roleButtons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.roleButtons button {
+    background: #0f1923;
+    border: 1px solid #9e9ebb;
+    border-radius: 6px;
+    padding: 6px 10px;
+    cursor: pointer;
+}
+
+.roleButtons img {
+    width: 28px;
+    display: block;
+}

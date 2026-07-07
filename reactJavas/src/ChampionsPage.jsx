@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import {useState} from "react"
 import './SummonerPage.css'
 import Navbar from './Navbar'
+import './ChampionsPage.css'
 
 const ChampionsPage = () => {
 
     const [version, setVersion] = useState(null);
   const [championList, setChampionList] =useState(null);
   const [champData, setChampData] = useState(null);
+  const [role, setRole] = useState("adc");
 
 
   useEffect(() => {
@@ -75,17 +77,24 @@ const ChampionsPage = () => {
 }
 
 let sum = 0
-for (let i = 0; i < champData[0].adc.length; i++) {
-  sum = sum + champData[0].adc[i][3];
+for (let i = 0; i < champData[0][role].length; i++) {
+  sum = sum + champData[0][role][i][3];
 
 }
 
 const totalMatches = sum/2;
     return (
        
-    <div style={{backgroundColor: 'black', minHeight: '100vh', color: 'white'}}>
+    <div className="ChampionsPage">
         <Navbar />
-        {champData[0].adc.filter(row => row[3] > 1500)
+        <div className="buttons">
+        <button onClick={() => setRole("top")}><img src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-top.png" alt="top" style={{width: '28px'}} /></button>
+        <button onClick={() => setRole("jungle")}><img src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-jungle.png" alt="jungle" style={{width: '28px'}} /></button>
+        <button onClick={() => setRole("mid")}><img src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-middle.png" alt="mid" style={{width: '28px'}} /></button>
+        <button onClick={() => setRole("adc")}><img src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-bottom.png" alt="bot" style={{width: '28px'}} /></button>
+        <button onClick={() => setRole("supp")}><img src="https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-clash/global/default/assets/images/position-selector/positions/icon-position-utility.png" alt="support" style={{width: '28px'}} /></button>
+      </div>
+        {champData[0][role].filter(row => row[3] > 1500)
                          .sort((a, b) => (b[2] / b[3]) - (a[2] / a[3]))
                          .map((row, index) =>{
             const champ = getChampName(row[0], championList);
