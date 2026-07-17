@@ -1,25 +1,231 @@
 .ChampionsPage {
-    background-color: black;
+    background-color: #0a0e14;
     min-height: 100vh;
     color: white;
     padding-top: 80px;
 }
 
+.filters{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto 10px;
+}
+
 .roleButtons {
     display: flex;
-    justify-content: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .roleButtons button {
-    background: #0f1923;
+    background: #111a24;
     border: 1px solid #9e9ebb;
     border-radius: 6px;
-    padding: 6px 10px;
+    width: 42px;
+    height: 42px;
+    box-sizing: border-box;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.roleButtons button:hover {
+    background: #1c2836;
+}
+
+.roleButtons button.active {
+    background: #2a2450;
 }
 
 .roleButtons img {
-    width: 28px;
+    width: 24px;
     display: block;
+    filter: brightness(0) saturate(100%) invert(72%) sepia(11%) saturate(560%) hue-rotate(202deg) brightness(93%) contrast(88%);
+}
+
+.rankDropdown {
+    position: relative;
+    width: 150px;
+    user-select: none;
+}
+
+.rankSelected {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #111a24;
+    border: 1px solid #9e9ebb;
+    border-radius: 6px;
+    height: 42px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.rankArrow {
+    margin-left: auto;
+    color: #8aa8b4;
+}
+
+.rankOptions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+    background: #111a24;
+    border: 1px solid #9e9ebb;
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.rankOption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.rankOption:hover {
+    background: #1c2836;
+}
+
+.rankSelected img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    transform: scale(3);
+}
+
+.rankOption img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    transform: scale(3);
+}
+
+.regionDropdown {
+    position: relative;
+    width: 110px;
+    user-select: none;
+    padding-top: 20px;
+}
+
+.regionSelected {
+    display: flex;
+    align-items: center;
+    background: #111a24;
+    border: 1px solid #9e9ebb;
+    border-radius: 6px;
+    height: 42px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.regionOptions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 4px;
+    background: #111a24;
+    border: 1px solid #9e9ebb;
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.regionOption {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.regionOption:hover {
+    background: #1c2836;
+}
+
+.tableWrap {
+    width: 58%;
+    min-width: 900px;
+    margin: 30px auto;
+    border: 1px solid #1e2d3a;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.champTable{
+    width: 100%;
+    border-collapse: collapse;
+    background: #111a24;
+}
+
+.champTable th {
+    background: #0c141d;
+    color: #7d94a6;
+    font-weight: 500;
+    text-align: left;
+    padding: 12px 16px;
+    font-size: 14px;
+    border-bottom: 1px solid #1e2d3a;
+}
+
+.champTable td {
+    padding: 8px 16px;
+    border-bottom: 1px solid #1a2530;
+    font-size: 14px;
+    vertical-align: middle;
+    color: #dbe4ec;
+}
+
+.champTable tbody tr:nth-child(even) {
+    background: #151f2a;
+}
+
+.champTable tbody tr:hover {
+    background: #1c2836;
+}
+
+.champTable td:first-child {
+    color: #5f7d8f;
+    text-align: center;
+    width: 40px;
+}
+
+.champTable tbody td:nth-child(2) {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.champTable tbody td:nth-child(2) img {
+    width: 40px;
+    height: 40px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.champTable th:nth-child(6),
+.champTable th:nth-child(7) {
+    text-align: center;
+}
+
+.counters, .best {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+}
+
+.counters img, .best img {
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+}
+.dropdowns{
+    padding-top: 20px;
 }
