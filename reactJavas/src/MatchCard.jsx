@@ -281,8 +281,15 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
     <div className="runeSep">|</div>
     <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRune1Array[i], runesData)?.icon}`} alt="rune4"/></div>
     <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRune2Array[i], runesData)?.icon}`} alt="rune5"/></div>
+
+    
 </div>
+
+<div>TUKA SI</div>
+
                 </div>
+
+                
             )
         })}
     </div>

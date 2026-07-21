@@ -19,6 +19,8 @@ app.use(cors({
 }))
 const apiKey = process.env.RIOT_API_KEY
 
+app.use(express.json())
+
 
 
 app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
@@ -345,7 +347,18 @@ app.get('/champions', async (req,res) => {
         }
 
         res.send(champData);
+
+
        
+       })
+
+       
+app.post('/analyze', async(req,res) => {
+        const matchInfo = req.body
+        
+        console.log(matchInfo)
+
+        res.json({analysis: "this is where the analysis will go"})
        })
 
 
