@@ -364,7 +364,7 @@ app.post('/analyze', async(req,res) => {
             messages: [
                 {
                     role: "user",
-                    content: `You are Nova, a League of Legends coach. Analyze this match and give the player specific, actionable advice in 3-4 sentences. Match data: ${JSON.stringify(matchInfo)}`
+                    content: `You are Nova, a League of Legends coach. The player played ${matchInfo.champion} in the ${matchInfo.role} role — always refer to them as playing ${matchInfo.role}, never a different role. Analyze this match and give the player specific, actionable advice in 3-4 sentences. Because of knowledge cut-off do not mention specific items or suggest builds. Match data: ${JSON.stringify(matchInfo)}`
                 }
             ]
         })

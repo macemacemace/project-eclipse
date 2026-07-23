@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams, Link} from "react-router-dom"
 import {useState} from "react"
 import './SummonerPage.css'
+import ReactMarkdown from 'react-markdown'
 
 
 
@@ -10,6 +11,7 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
 
     const [isOpen, setIsOpen] = useState(false);
     const [overflowVisible, setOverflowVisible] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleToggle = () => {
         if (isOpen) {
@@ -44,6 +46,7 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
 
     const handleAnalyze = async () =>{
 
+        setLoading(true)
 
         let myTeam, enemyTeam;
 
@@ -76,14 +79,17 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                 role: roles[playerIndex]
 
                 
-
+                
             })
+            
 
         });
 
         const data =  await responseAnalyze.json();
         console.log(data);
         setAnalysis(data.analysis);
+
+        setLoading(false);
     }
         
 
@@ -337,11 +343,20 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
         })}
     </div>
 
-
+<div className="analyzeRow">
 <button className="analyzeBtn" onClick={handleAnalyze}>Analyze with Nova
     
 </button>
-{analysis && <div className="novaBox">{analysis}</div>}
+{loading && (
+    <div className="goldDots">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+)
+}
+</div>
+{analysis && <div className="novaBox"><ReactMarkdown>{analysis}</ReactMarkdown></div>}
                 </div>
             
 

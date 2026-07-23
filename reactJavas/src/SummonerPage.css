@@ -187,7 +187,7 @@
     background-color: #0f1923;
     gap: 14px;
     align-items: center;
-    padding: 6px 14px;
+    padding: 6px 14px ;
     flex-wrap: wrap;
 }
 
@@ -348,6 +348,8 @@ flex-shrink: 0;
     padding: 6px 0;
     width: 100%;
     overflow: visible;
+   
+    
 }
 
 .teamLabel {
@@ -604,4 +606,75 @@ flex-shrink: 0;
 
 .nav-link:hover {
     color: white;
+}
+
+.novaBox {
+    background: #0f1923;
+    border: 1px solid #1e2d3a;
+    border-left: 3px solid #00c896;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-top: 12px;
+    color: #c8d6e0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.novaBox h1 {
+    font-size: 18px;
+    color: #00c896;
+    margin: 0 0 10px 0;
+}
+
+.novaBox strong {
+    color: #e0eaf0;
+}
+
+.novaBox p {
+    margin: 0 0 10px 0;
+}
+
+.analyzeBtn{
+    width: fit-content;
+    border: 1px solid rgb(232, 182, 17);
+    background-color: rgb(83, 64, 4);
+    color: rgb(232, 182, 17);
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 6px 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.analyzeRow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: flex-start;
+}
+
+.goldDots {
+    display: flex;
+    gap: 6px;
+}
+
+.goldDots span {
+    width: 10px;
+    height: 10px;
+    background: #c8aa6e;
+    border-radius: 50%;
+    animation: goldBounce 0.6s infinite alternate;
+}
+
+.goldDots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.goldDots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes goldBounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
 }
