@@ -7,6 +7,8 @@ const { execFile } = require('child_process')
 const util = require('util')
 const execFilePromise = util.promisify(execFile)
 const app = express()
+const Anthropic = require('@anthropic-ai/sdk');
+const anthropic = new Anthropic();
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -355,10 +357,19 @@ app.get('/champions', async (req,res) => {
        
 app.post('/analyze', async(req,res) => {
         const matchInfo = req.body
-        
-        console.log(matchInfo)
 
-        res.json({analysis: "this is where the analysis will go"})
+        const message = await anthropic.messages.create({
+            model: "claude-haiku-4-5",
+            max_tokens: 1024,
+            messages: [
+                {
+                    role: "user",
+                    content: `You are Nova, a League of Legends coach. Analyze this match and give the player specific, actionable advice in 3-4 sentences. Match data: ${JSON.stringify(matchInfo)}`
+                }
+            ]
+        })
+
+        res.json({analysis: message.content[0].text})
        })
 
 

@@ -40,8 +40,51 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
 
     const roles = ['Top', 'Jungle', 'Mid', 'Bottom', 'Support', 'Top', 'Jungle', 'Mid', 'Bottom', 'Support'];
         
+    const [analysis, setAnalysis] = useState(null);
+
+    const handleAnalyze = async () =>{
 
 
+        let myTeam, enemyTeam;
+
+                if (playerIndex < 5) {
+                myTeam = match.championsArray.slice(0, 5);
+                enemyTeam = match.championsArray.slice(5, 10);
+                } else {
+                myTeam = match.championsArray.slice(5, 10);
+                enemyTeam = match.championsArray.slice(0, 5);
+                }
+
+
+            const responseAnalyze = await fetch(`${import.meta.env.VITE_API_URL}/analyze`, {
+            method: "POST", 
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({champion: match.championsArray[playerIndex],
+                kills: match.playerKillsArray[playerIndex],
+                deaths: match.playerDeathsArray[playerIndex],
+                assists: match.playerAssistsArray[playerIndex],
+                CS: match.minionKillsArray[playerIndex],
+                duration: match.gameDuration,
+                item1: getItemName(match.playerBuildsArray0[playerIndex], itemData).name,
+                item2: getItemName(match.playerBuildsArray1[playerIndex], itemData).name,
+                item3: getItemName(match.playerBuildsArray2[playerIndex], itemData).name,
+                item4: getItemName(match.playerBuildsArray3[playerIndex], itemData).name,
+                item5: getItemName(match.playerBuildsArray4[playerIndex], itemData).name,
+                item6: getItemName(match.playerBuildsArray5[playerIndex], itemData).name,
+                myTeam: myTeam,
+                enemyTeam: enemyTeam,
+                role: roles[playerIndex]
+
+                
+
+            })
+
+        });
+
+        const data =  await responseAnalyze.json();
+        console.log(data);
+        setAnalysis(data.analysis);
+    }
         
 
   return (
@@ -285,7 +328,7 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
     
 </div>
 
-<div>TUKA SI</div>
+                        
 
                 </div>
 
@@ -295,11 +338,14 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
     </div>
 
 
-
+<button className="analyzeBtn" onClick={handleAnalyze}>Analyze with Nova
+    
+</button>
+{analysis && <div className="novaBox">{analysis}</div>}
                 </div>
             
 
-
+        
     </div>
 )
 
