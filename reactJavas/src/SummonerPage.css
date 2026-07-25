@@ -635,15 +635,51 @@ flex-shrink: 0;
 }
 
 .analyzeBtn{
+    position: relative;
+    overflow: hidden;
     width: fit-content;
-    border: 1px solid rgb(232, 182, 17);
-    background-color: rgb(83, 64, 4);
-    color: rgb(232, 182, 17);
+    border: 1px solid #7a6cff;
+    background-color: #1a1040;
+    color: #e8e4ff;
     border-radius: 8px;
-    font-size: 20px;
-    padding: 6px 14px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 22px;
     margin-bottom: 10px;
     cursor: pointer;
+}
+
+.starLayer {
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    background-image:
+        radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 55% 20%, #fff, transparent),
+        radial-gradient(1px 1px at 75% 65%, #dfe8ff, transparent),
+        radial-gradient(1px 1px at 35% 75%, #fff, transparent),
+        radial-gradient(1px 1px at 88% 40%, #fff, transparent),
+        radial-gradient(1px 1px at 12% 60%, #cbd5ff, transparent),
+        radial-gradient(1px 1px at 30% 15%, #fff, transparent),
+        radial-gradient(1px 1px at 65% 45%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 5% 40%, #dfe8ff, transparent),
+        radial-gradient(1px 1px at 48% 85%, #fff, transparent),
+        radial-gradient(1px 1px at 95% 75%, #cbd5ff, transparent),
+        radial-gradient(1px 1px at 82% 15%, #fff, transparent),
+        radial-gradient(1px 1px at 25% 55%, #fff, transparent),
+        radial-gradient(1.5px 1.5px at 70% 88%, #fff, transparent),
+        radial-gradient(1px 1px at 42% 35%, #dfe8ff, transparent);
+    animation: twinkle 2s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.btnText {
+    position: relative;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
 }
 
 .analyzeRow {
@@ -661,7 +697,7 @@ flex-shrink: 0;
 .goldDots span {
     width: 10px;
     height: 10px;
-    background: #c8aa6e;
+    background: #7a6cff;
     border-radius: 50%;
     animation: goldBounce 0.6s infinite alternate;
 }
@@ -678,3 +714,4 @@ flex-shrink: 0;
     from { transform: translateY(0); }
     to { transform: translateY(-10px); }
 }
+

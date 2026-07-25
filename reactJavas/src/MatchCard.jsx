@@ -344,9 +344,14 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
     </div>
 
 <div className="analyzeRow">
-<button className="analyzeBtn" onClick={handleAnalyze}>Analyze with Nova
-    
+<button className="analyzeBtn" onClick={handleAnalyze}>
+    <span className="starLayer"></span>
+    <span className="btnText">Analyze with Nova</span>
 </button>
+
+
+
+
 {loading && (
     <div className="goldDots">
         <span></span>
