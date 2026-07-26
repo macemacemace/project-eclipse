@@ -14,6 +14,8 @@ const ChampionsPage = () => {
   const [rankOpen, setRankOpen] = useState(false);
   const [region, setRegion] = useState("world");
   const [regionOpen, setRegionOpen] = useState(false);
+  const [sortBy, setSortBy] = useState("winrate");
+  const[sortDir, setSortDir] =useState("desc");
 
   const regions = [
     { value: "world", label: "World" },
@@ -108,6 +110,15 @@ for (let i = 0; i < champData[0][role].length; i++) {
 
 const totalMatches = sum/2;
 
+function handleSort(column){
+  if(sortBy === column){
+    setSortDir( sortDir === "asc" ? "desc" : "asc");
+  } else {
+    setSortBy(column);
+    setSortDir(column === "champion" ? "asc" : "desc");
+  }
+}
+
 
     return (
        
@@ -181,10 +192,11 @@ const totalMatches = sum/2;
         <thead className="headers">
           <tr>
             <th>Rank</th>
-            <th>Champion</th>
-            <th>Win rate</th>
-            <th>Pick rate</th>
-            <th>Matches</th>
+            
+            <th className= {sortBy === "champion" ? "sortable active" : "sortable"} onClick={() => handleSort("champion")}>Champion</th>
+            <th className= {sortBy === "winrate" ? "sortable active" : "sortable"} onClick={() => handleSort("winrate")}>Win rate</th>
+            <th className= {sortBy === "pickrate" ? "sortable active" : "sortable"} onClick={() => handleSort("pickrate")}>Pick rate</th>
+            <th className= {sortBy === "matches" ? "sortable active" : "sortable"} onClick={() => handleSort("matches")}>Matches</th>
             <th>Worst vs</th>
             <th>Best vs</th>
           </tr>
@@ -192,7 +204,25 @@ const totalMatches = sum/2;
 
         <tbody>
         {champData[0][role].filter(row => row[3] > 1000)
-                         .sort((a, b) => (b[2] / b[3]) - (a[2] / a[3]))
+                         .sort((a, b) => {
+
+                          const dir = sortDir === "asc" ? 1 : -1;
+                          if(sortBy === "champion"){
+                            return getChampName(a[0], championList).name
+                              .localeCompare(getChampName(b[0], championList).name) * dir;
+                          }
+                          if(sortBy === "winrate"){
+                            return ((b[2] / b[3]) - (a[2] / a[3])) * dir; 
+                          }
+                          if(sortBy === "pickrate"){
+                            return ((a[3] /totalMatches) - (b[3] /totalMatches)) * dir;
+                          }
+                          if(sortBy ==="matches"){
+                          return (b[3] - a[3]) * dir; 
+                          }
+                          return 0;
+
+                         })
                          .map((row, index) =>{
             const champ = getChampName(row[0], championList);
             const matchups = [...row[1]].sort((a,b) => (a[1] / a[2]) - (b[1] / b[2]));

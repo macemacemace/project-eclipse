@@ -229,3 +229,16 @@
 .dropdowns{
     padding-top: 20px;
 }
+
+.champTable th.sortable{
+    cursor: pointer;
+    user-select: none;
+}
+.champTable th.sortable:hover {
+    color: #c8aa6e;
+}
+.champTable th.active {
+    color: #c8aa6e;
+    font-weight: bold;
+    border-top: 3px solid #c8aa6e ;
+}
