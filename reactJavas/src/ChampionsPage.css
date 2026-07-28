@@ -210,10 +210,22 @@
     margin-right: 10px;
 }
 
-.champTable th:nth-child(6),
-.champTable th:nth-child(7) {
+.champTable th:nth-child(7),
+.champTable th:nth-child(8) {
     text-align: center;
 }
+
+.champTable td.tier {
+    font-weight: 700;
+    text-align: center;
+    width: 48px;
+}
+.champTable td.tier[data-tier="S+"] { color: #ff9b00; }
+.champTable td.tier[data-tier="S"]  { color: #4ac6b7; }
+.champTable td.tier[data-tier="A"]  { color: #5383e8; }
+.champTable td.tier[data-tier="B"]  { color: #9b7fd4; }
+.champTable td.tier[data-tier="C"]  { color: #7d94a6; }
+.champTable td.tier[data-tier="D"]  { color: #e05a6d; }
 
 .counters, .best {
     display: flex;
@@ -240,5 +252,5 @@
 .champTable th.active {
     color: #c8aa6e;
     font-weight: bold;
-    border-top: 3px solid #c8aa6e ;
+    border: 3px solid #c8aa6e ;
 }

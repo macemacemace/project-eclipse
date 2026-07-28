@@ -110,6 +110,37 @@ for (let i = 0; i < champData[0][role].length; i++) {
 
 const totalMatches = sum/2;
 
+// --- Champion tier (S+ / S / A / B / C / D) ---
+// Standardize win rate and pick rate across the role's played champions
+// (z-scores), blend into one score (win rate weighted heavier), then bucket.
+const rankedRows = champData[0][role].filter(row => row[3] > 1000);
+
+const winrates = rankedRows.map(row => row[2] / row[3]);
+const meanWin = winrates.reduce((a, b) => a + b, 0) / winrates.length;
+const stdWin = Math.sqrt(winrates.reduce((s, wr) => s + (wr - meanWin) ** 2, 0) / winrates.length);
+
+const pickrates = rankedRows.map(row => row[3] / totalMatches);
+const meanPick = pickrates.reduce((a, b) => a + b, 0) / pickrates.length;
+const stdPick = Math.sqrt(pickrates.reduce((s, pr) => s + (pr - meanPick) ** 2, 0) / pickrates.length);
+
+function getScore(row){
+  const winrate = row[2] / row[3];
+  const pickrate = row[3] / totalMatches;
+  const zWin = (winrate - meanWin) / stdWin;
+  const zPick = (pickrate - meanPick) / stdPick;
+  return zWin * 0.7 + zPick * 0.3;
+}
+
+function getTier(row){
+  const score = getScore(row);
+  if (score >= 2.0) return "S+";
+  if (score >= 1.0) return "S";
+  if (score >= 0.0) return "A";
+  if (score >= -1.0) return "B";
+  if (score >= -2.0) return "C";
+  return "D";
+}
+
 function handleSort(column){
   if(sortBy === column){
     setSortDir( sortDir === "asc" ? "desc" : "asc");
@@ -193,7 +224,9 @@ function handleSort(column){
           <tr>
             <th>Rank</th>
             
+
             <th className= {sortBy === "champion" ? "sortable active" : "sortable"} onClick={() => handleSort("champion")}>Champion</th>
+            <th className={sortBy === "tier" ? "sortable active" : "sortable"} onClick={() => handleSort("tier")}>Tier</th>
             <th className= {sortBy === "winrate" ? "sortable active" : "sortable"} onClick={() => handleSort("winrate")}>Win rate</th>
             <th className= {sortBy === "pickrate" ? "sortable active" : "sortable"} onClick={() => handleSort("pickrate")}>Pick rate</th>
             <th className= {sortBy === "matches" ? "sortable active" : "sortable"} onClick={() => handleSort("matches")}>Matches</th>
@@ -207,6 +240,9 @@ function handleSort(column){
                          .sort((a, b) => {
 
                           const dir = sortDir === "asc" ? 1 : -1;
+                          if(sortBy === "tier"){
+                            return (getScore(a) - getScore(b)) * dir;
+                          }
                           if(sortBy === "champion"){
                             return getChampName(a[0], championList).name
                               .localeCompare(getChampName(b[0], championList).name) * dir;
@@ -225,6 +261,7 @@ function handleSort(column){
                          })
                          .map((row, index) =>{
             const champ = getChampName(row[0], championList);
+            const tier = getTier(row);
             const matchups = [...row[1]].sort((a,b) => (a[1] / a[2]) - (b[1] / b[2]));
             const best1 = matchups[0][0];
             const bestChamp1 = getChampName(best1, championList);
@@ -245,13 +282,14 @@ function handleSort(column){
               <tr key = {index}>
                 <td>{index + 1}</td>
                 <td>
-                {champ && <img src = 
+                {champ && <img src =
                 {`https://ddragon.leagueoflegends.com/cdn/${version}/img/champion/${champ.id}.png`}
                 alt="" />} 
                 
 
                   
                 {champ?.name} </td>
+                <td className="tier" data-tier={tier}>{tier}</td>
                 <td>{((row[2] / row[3]) * 100).toFixed(1)}% </td>
                 <td>{((row[3] / totalMatches) * 100).toFixed(1)}% </td>
                 <td>{row[3].toLocaleString()} </td>
