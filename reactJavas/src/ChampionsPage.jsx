@@ -110,9 +110,7 @@ for (let i = 0; i < champData[0][role].length; i++) {
 
 const totalMatches = sum/2;
 
-// --- Champion tier (S+ / S / A / B / C / D) ---
-// Standardize win rate and pick rate across the role's played champions
-// (z-scores), blend into one score (win rate weighted heavier), then bucket.
+
 const rankedRows = champData[0][role].filter(row => row[3] > 1000);
 
 const winrates = rankedRows.map(row => row[2] / row[3]);
@@ -148,6 +146,22 @@ function handleSort(column){
     setSortBy(column);
     setSortDir(column === "champion" ? "asc" : "desc");
   }
+}
+
+function winrateColor(winrate){
+  if(winrate < 46){
+    return '#54031f';
+  }
+  if(winrate < 48){
+    return '#a3292d';
+  }
+  if(winrate < 52){
+    return '#7291c9';
+  }
+  if(winrate < 54){
+    return '#0bba0b';
+  }
+  else{ return '#006400'}
 }
 
 
@@ -290,7 +304,7 @@ function handleSort(column){
                   
                 {champ?.name} </td>
                 <td className="tier" data-tier={tier}>{tier}</td>
-                <td>{((row[2] / row[3]) * 100).toFixed(1)}% </td>
+                <td style={{color: winrateColor(((row[2] / row[3]) * 100))}}>{((row[2] / row[3]) * 100).toFixed(1)}% </td>
                 <td>{((row[3] / totalMatches) * 100).toFixed(1)}% </td>
                 <td>{row[3].toLocaleString()} </td>
 
