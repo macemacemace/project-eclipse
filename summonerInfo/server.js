@@ -106,6 +106,9 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
      const data5 = await response5.json()
 
 
+     
+
+
 
 
     const matchesArray=[]         
@@ -150,6 +153,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
           const playerShard2Array = [];
             const playerShard3Array = []; 
         const playerLpArray = [];
+         const teamPositionArray = [];
         
             
             
@@ -170,6 +174,8 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         playerAssistsArray.push(playerAssists);
         const playerTeam = data4.info.participants[j].teamId
         playerTeamArray.push(playerTeam)
+        const teamPosition = data4.info.participants[j].teamPosition
+        teamPositionArray.push(teamPosition)
         const winner = data4.info.participants[j].win
         winningTeam.push(winner)
         const minions = data4.info.participants[j].totalMinionsKilled + data4.info.participants[j].neutralMinionsKilled
@@ -265,7 +271,8 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         secondaryRune2Array,
         playerShard1Array,
         playerShard2Array,
-        playerShard3Array}
+        playerShard3Array,
+        teamPositionArray}
     
     matchesArray.push(dataMatch);
     
@@ -355,21 +362,128 @@ app.get('/champions', async (req,res) => {
        })
 
        
+
+       
 app.post('/analyze', async(req,res) => {
         const matchInfo = req.body
 
+        console.log("enemyBuilds:", JSON.stringify(matchInfo.enemyBuilds, null, 2));
+        console.log("laneOpponent:", JSON.stringify(matchInfo.laneOpponent));
+
+        const versionRes = await fetch("https://ddragon.leagueoflegends.com/api/versions.json");
+        const versions = await versionRes.json();
+        const latestVersion = versions[0];
+
+        
+        let buildText = null;
+
+        try {
+    const { stdout } = await execFilePromise('curl', [
+    '-s',
+    '-f',
+    '-H', 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+    `https://u.gg/lol/champions/${matchInfo.champion.toLowerCase()}/build`
+    ], { maxBuffer: 10 * 1024 * 1024 });
+
+    const html = stdout;
+
+
+    const re = /sprite\/item(\d+)\.webp\);background-repeat:no-repeat;background-position:-(\d+)px -(\d+)px/g;
+    const matches = [...html.matchAll(re)];
+
+    const itemRes = await
+    fetch(`https://ddragon.leagueoflegends.com/cdn/${latestVersion}/data/en_US/item.json`)
+
+    const itemData =await itemRes.json();
+
+    const items = matches.map(m => {
+        const sprite = "item" +m[1] +".png";
+        const x = Number(m[2]);
+        const y = Number(m[3]);
+
+        const found = Object.values(itemData.data).find(it =>
+            it.image.sprite === sprite && it.image.x === x && it.image.y === y
+        );
+
+        return found ? found : null;
+
+
+    })
+
+        function formatItem(it) {
+    const clean = it.description.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+    return `${it.name} (${it.gold.total}g) — ${clean}`;
+}
+
+        const starting = items.slice(0, 2).filter(Boolean);
+        const core     = items.slice(2, 5).filter(Boolean);
+
+        if (starting.length || core.length) {
+        buildText =
+    `Starting items (unordered set): ${starting.map(formatItem).join("; ")}\n` +
+    `Core items (unordered set, NOT a purchase sequence): ${core.map(formatItem).join("; ")}`;
+        }
+        }
+        catch (error) {
+            console.log("could not fetch u.gg build for " + matchInfo.champion + ":", error.message);
+        }
+
         const message = await anthropic.messages.create({
             model: "claude-haiku-4-5",
-            max_tokens: 1024,
+            max_tokens: 2048,
             messages: [
                 {
                     role: "user",
-                    content: `You are Nova, a League of Legends coach. The player played ${matchInfo.champion} in the ${matchInfo.role} role — always refer to them as playing ${matchInfo.role}, never a different role. Analyze this match and give the player specific, actionable advice in 3-4 sentences. Because of knowledge cut-off do not mention specific items or suggest builds. Match data: ${JSON.stringify(matchInfo)}`
+                    content: `You are Nova, a League of Legends coach. The player played ${matchInfo.champion} in the ${matchInfo.role} role — always refer to them as playing ${matchInfo.role}, never a different role.
+
+WHAT THE DATA DOES AND DOES NOT CONTAIN — read this before anything else:
+- Every item list is the FINAL inventory at the end of the game. It is an unordered set. You have NO data about purchase order, item timings, or what was built first, second or third. Never describe a build order, never say an item was "rushed", "delayed" or "built before/after" anything, and never comment on the timing of a purchase.
+- All numeric stats (KDA, CS, cs/min) are given to you precomputed. Use those exact numbers. Do not calculate your own.
+- In the Stat Assessment and Build Assessment sections, only discuss what is present in the data below, and never claim a specific number, winrate, or item stat that is not given to you. Do not invent things that happened in the game - you have no data on vision, roams, wave state, or any in-game event, so never describe what did happen in lane. In the Laning section you may use your general knowledge of champion kits and playstyles to give forward-looking advice, but the same ban on invented numbers, winrates and item stats applies there too.
+- Reason about resistances from the actual item stats. Do not assume an item grants a stat it does not list.
+
+${buildText
+  ? `CURRENT PATCH ${latestVersion} RECOMMENDED BUILD FOR ${matchInfo.champion} (from live win-rate data):
+${buildText}
+
+This is real current-patch data - trust it over your own knowledge and use these exact item names. It is a set of items that perform well, not an order to build them in.`
+  : `No current build data was available for this champion, so do not suggest specific items or builds.`}
+
+Match data: ${JSON.stringify(matchInfo)}
+
+Field notes:
+- "yourItems" is THE PLAYER'S OWN final inventory. This is the complete and authoritative list of what they built. Read every entry in it before saying anything about their build.
+- "kda" and "csPerMin" are already calculated for you. "durationMinutes" is the game length in minutes.
+- "laneOpponent" is the enemy in the same role - the matchup the player actually laned against.
+- "enemyBuilds" lists every enemy champion with their role, KDA and the items they finished the game with.
+- Mythic items do not exist
+
+Before writing your answer, check each recommended item against "yourItems" one by one. Never say the player skipped, missed or failed to build an item that appears in "yourItems".
+
+Write your answer in exactly three sections, using these exact markdown headings and this order. Each section is 2-4 sentences. Do not add an intro, a conclusion, or any other section.
+
+Format your answer as markdown. Put a blank line between every section and after every section heading. Within the text, wrap item names, champion names, and key numbers in ** ** so they stand out - for example **Infinity Edge**, **Ashe**, **7.7 cs/min**. Bold the specific things that matter, not whole sentences.
+
+Begin with a single line: "# Match Analysis: <champion> <role>" using the champion and role given above. Then the three sections.
+
+**Stat Assessment**
+Judge the player's raw performance from the numbers. Compare their CS and csPerMin against what is reasonable for their role over durationMinutes, and say what they should be aiming for. Call out deaths explicitly if they are high for the game length. Compare their KDA to their lane opponent's and to the rest of both teams - say plainly whether they were ahead, even, or behind. Use only the numbers given to you.
+
+**Build Assessment**
+Compare "yourItems" against the recommended set, item by item. Where they differ, say whether the choice was fine or a mistake and why, reasoning from the item stats you were given. Look at "enemyBuilds": if the enemy team stacked armor, magic resist, or health, name the specific items showing it and recommend the counter-item accordingly. If their build was good, say so instead of inventing a criticism.
+
+**Laning**
+Give matchup-specific advice for the player's champion against "laneOpponent". Use your general knowledge of both champions' kits, power spikes, range, and playstyle - for example who wins an extended trade, who wins a short trade, who should look to all-in and when, and how to play around cooldowns and wave state. Be concrete and actionable. If "laneOpponent" is null, give general laning advice for the player's champion and role instead.`
                 }
             ]
         })
 
         res.json({analysis: message.content[0].text})
+
+        
+        
+
+
        })
 
 

@@ -41,6 +41,11 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
       const csPerMin = (Cs / gameDur1).toFixed(1);
 
     const roles = ['Top', 'Jungle', 'Mid', 'Bottom', 'Support', 'Top', 'Jungle', 'Mid', 'Bottom', 'Support'];
+
+   
+    const positionLabels = { TOP: 'Top', JUNGLE: 'Jungle', MIDDLE: 'Mid', BOTTOM: 'Bottom', UTILITY: 'Support' };
+
+    const getRole = (i) => positionLabels[match.teamPositionArray?.[i]] || roles[i];
         
     const [analysis, setAnalysis] = useState(null);
 
@@ -58,6 +63,28 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                 enemyTeam = match.championsArray.slice(0, 5);
                 }
 
+        const itemsOf = (i) => [
+            match.playerBuildsArray0[i], match.playerBuildsArray1[i], match.playerBuildsArray2[i],
+            match.playerBuildsArray3[i], match.playerBuildsArray4[i], match.playerBuildsArray5[i]
+        ].filter(id => id !== 0 && id !== null)
+         .map(id => getItemName(id, itemData)?.name)
+         .filter(Boolean);
+
+        const enemyStart = playerIndex < 5 ? 5 : 0;
+
+        const enemyBuilds = Array.from({length: 5}, (_, n) => {
+            const ei = enemyStart + n;
+            return {
+                champion: match.championsArray[ei],
+                role: getRole(ei),
+                kda: `${match.playerKillsArray[ei]}/${match.playerDeathsArray[ei]}/${match.playerAssistsArray[ei]}`,
+                items: itemsOf(ei)
+            };
+        });
+
+        const myRole = getRole(playerIndex);
+        const laneOpponent = enemyBuilds.find(e => e.role === myRole) || null;
+
 
             const responseAnalyze = await fetch(`${import.meta.env.VITE_API_URL}/analyze`, {
             method: "POST", 
@@ -68,15 +95,15 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                 assists: match.playerAssistsArray[playerIndex],
                 CS: match.minionKillsArray[playerIndex],
                 duration: match.gameDuration,
-                item1: getItemName(match.playerBuildsArray0[playerIndex], itemData).name,
-                item2: getItemName(match.playerBuildsArray1[playerIndex], itemData).name,
-                item3: getItemName(match.playerBuildsArray2[playerIndex], itemData).name,
-                item4: getItemName(match.playerBuildsArray3[playerIndex], itemData).name,
-                item5: getItemName(match.playerBuildsArray4[playerIndex], itemData).name,
-                item6: getItemName(match.playerBuildsArray5[playerIndex], itemData).name,
+                durationMinutes: Number(gameDur1),
+                kda: kda,
+                csPerMin: Number(csPerMin),
+                yourItems: itemsOf(playerIndex),
                 myTeam: myTeam,
                 enemyTeam: enemyTeam,
-                role: roles[playerIndex]
+                role: myRole,
+                enemyBuilds: enemyBuilds,
+                laneOpponent: laneOpponent
 
                 
                 
@@ -117,7 +144,7 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
     </span>
         </div>
         </div>
-        <div className="Role">{roles[playerIndex]}</div>
+        <div className="Role">{getRole(playerIndex)}</div>
         <div className="GameStats">
             <div style={{display: 'flex'}}>
                 <div>{kills}/</div>
