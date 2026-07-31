@@ -457,6 +457,7 @@ Field notes:
 - "laneOpponent" is the enemy in the same role - the matchup the player actually laned against.
 - "enemyBuilds" lists every enemy champion with their role, KDA and the items they finished the game with.
 - Mythic items do not exist
+- Do not mention mythic items or item compoments, its obvious if an item is incomplete the player did not have enough time to complete it.
 
 Before writing your answer, check each recommended item against "yourItems" one by one. Never say the player skipped, missed or failed to build an item that appears in "yourItems".
 
