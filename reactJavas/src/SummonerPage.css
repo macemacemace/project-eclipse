@@ -608,6 +608,17 @@ flex-shrink: 0;
     color: white;
 }
 
+.nav-signin{
+    margin-left: auto;
+    border: 1px solid rgb(109, 121, 136);
+    border-radius: 10px;
+    color: #edf2f1;
+    font-size: 20px;
+    background: rgb(31, 111, 143);
+    padding: 7px 20px;
+    text-decoration: none;
+}
+
 .novaBox {
     background: #0f1923;
     border: 1px solid #1e2d3a;

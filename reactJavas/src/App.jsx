@@ -6,6 +6,8 @@ import {useNavigate} from 'react-router-dom'
 import './HomePage.css'
 import Logo from './logo.svg?react'
 import ChampionsPage from './ChampionsPage'
+import Navbar from "./Navbar";
+import LoginPage from "./LoginPage";
 
 
 
@@ -55,8 +57,10 @@ async function  handleSearch(){
 return (
 
   
- 
+  
   <div className="home-container">
+
+    <Navbar />
     <div className = "logo-wrapper">
      <Logo className="logo" />
      </div>
@@ -106,7 +110,8 @@ placeholder= "Region"
 const router = createBrowserRouter([
   {path: "/", element: <HomePage />},
   {path: "/:region/:name/:tag", element: <SummonerPage />},
-  {path: "/:champions", element: <ChampionsPage />}
+  {path: "/champions", element: <ChampionsPage />},
+  {path: "/login", element: <LoginPage/>}
 ])
 
 function App(){
