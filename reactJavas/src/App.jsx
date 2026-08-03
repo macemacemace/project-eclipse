@@ -102,7 +102,7 @@ placeholder= "Region"
 
 
 
-  </div> //end of main div
+  </div>                                    
  
 )
 
