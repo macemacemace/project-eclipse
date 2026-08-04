@@ -1,9 +1,11 @@
 import { useEffect } from "react";
-import { useParams} from "react-router-dom"
+
 import {useState} from "react"
 import './SummonerPage.css'
 import MatchCard from './MatchCard'
 import Navbar from './Navbar'
+import { useParams, useNavigate } from "react-router-dom";
+import { supabase } from "./supabaseClient";
 
 const SummonerPage = () =>{
 
@@ -19,6 +21,84 @@ const SummonerPage = () =>{
   const [runesData, setRunesData] = useState(null);
   const [version, setVersion] = useState(null);
   const [itemData, setItemData] = useState(null)
+  const [user, setUser] = useState(null)
+  const [isFavourite, setIsFavourite] = useState(false)
+  const navigate = useNavigate()
+
+
+
+  useEffect(() => {
+    async function checkFavourite() {
+      const {data: userData } = await supabase.auth.getUser()
+      setUser(userData.user)
+
+
+      if(!userData.user){
+        setIsFavourite(false)
+        return
+      }
+
+      const {data, error} =await supabase
+      .from('favourites')
+      .select('id')
+      .eq('region',region)
+      .eq('name',name)
+      .eq('tag',tag)
+      .maybeSingle()
+
+
+      if(error){
+        console.error(error.message)
+        return
+      }
+
+      if(data) {
+        setIsFavourite(true)
+      } else {
+        setIsFavourite(false)
+      }
+    }
+
+
+    checkFavourite()
+  }, [region, name,tag])
+
+
+  const toggleFavourite = async() => {
+    if (!user){
+      navigate('/login')
+      return
+    }
+
+    if(isFavourite){
+      const {error} = await supabase
+      .from('favourites')
+      .delete()
+      .eq('region',region)
+      .eq('name',name)
+      .eq('tag',tag)
+
+
+      if(error){
+        console.error(error.message)
+        return
+      }
+
+      setIsFavourite(false)
+
+    } else {
+      const {error} = await supabase
+      .from('favourites')
+      .insert({region, name, tag})
+
+      if(error){
+          console.error(error.message)
+          return
+      }
+      setIsFavourite(true)
+    }
+  }
+  
   useEffect(() => {
     async function fetchData() {
 
@@ -102,6 +182,13 @@ const SummonerPage = () =>{
     return { name: item?.name, description: item?.plaintext }
 }
 
+let star
+if (isFavourite) {
+  star = '★'
+} else {
+  star = '☆'
+}
+
   
   const roles = ['Top', 'Jungle', 'Mid', 'Bottom', 'Support', 'Top', 'Jungle', 'Mid', 'Bottom', 'Support'];
   
@@ -135,6 +222,7 @@ console.log(summonerData?.data5)
 
         </div>
       <div className="SummonerName">
+        <button className="favBtn" onClick={toggleFavourite}>{star}</button>
         <div>{summonerData?.data?.gameName}</div>
     <div className="tag">#{summonerData?.data?.tagLine}</div>
      

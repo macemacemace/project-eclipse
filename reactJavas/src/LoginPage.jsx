@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import {useState} from "react"
 import { useNavigate } from "react-router-dom";
 import { supabase } from "./supabaseClient";
@@ -19,6 +19,7 @@ const LoginPage = () => {
     const [isSignUp,setIsSignUp] =useState(false);
     const [error,setError] =useState(null);
     const [loading,setLoading] =useState(false);
+    const [username, setUsername] = useState('');
 
 
     const navigate = useNavigate()
@@ -29,9 +30,24 @@ const LoginPage = () => {
         setError(null)
         setLoading(true)
 
-        const {error} = isSignUp
-        ?await supabase.auth.signUp({email, password})
-        : await supabase. auth.signInWithPassword({email, password})
+
+        let result;
+
+
+        if(isSignUp){
+            result = await supabase.auth.signUp({
+                email,
+                password,
+                options: {data: {username}}
+            })
+        }else {
+            result =await supabase.auth.signInWithPassword({email, password})
+        }
+
+        const {error} = result
+
+
+       
 
         setLoading(false)
 
@@ -60,6 +76,7 @@ return (
 
             <h1>{isSignUp ? 'Create an account' : 'Welcome back'}</h1>
             <form onSubmit={handleEmailAuth}>
+                
                 <input type="email"
                 placeholder="Email"
                 value={email}
@@ -74,6 +91,14 @@ return (
                 required
                 minLength={6}
                 />
+
+                {isSignUp && (<input type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                minLength={3}
+                 />)}
 
                 {error &&  <div className="loginError">{error}</div>}
 
