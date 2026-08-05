@@ -10,6 +10,37 @@ const app = express()
 const Anthropic = require('@anthropic-ai/sdk');
 const anthropic = new Anthropic();
 
+
+
+const { createClient } = require('@supabase/supabase-js')
+
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_ANON_KEY
+)
+
+
+async function requireAuth(req,res,next){
+    const header = req.headers.authorization
+
+    if (!header || !header.startsWith('Bearer ')) {
+        return res.status(401).json({error: 'missing token'})
+    }
+
+    const token = header.split(' ')[1]
+
+    const {data, error} = await supabase.auth.getUser(token)
+
+    if(error || !data.user){
+        return res.status(401).json({error: 'invalid token'})
+    }
+
+    req.user =data.user;
+    req.token = token
+
+    next()
+}
+
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin || origin.includes('localhost') || origin.includes('vercel.app') || origin.includes('martinjakovoski.dev')) {
@@ -23,7 +54,38 @@ const apiKey = process.env.RIOT_API_KEY
 
 app.use(express.json())
 
+app.get('/me', requireAuth, (req, res) => {
+    res.json({ id: req.user.id, email: req.user.email })
+})
 
+/* PARKED - works, but not wired up to the frontend yet.
+
+   middleware attempt but of no use
+
+   
+*/
+
+/*app.get('/favourites', requireAuth, async (req, res) => {
+    const userClient = createClient(
+        process.env.SUPABASE_URL,
+        process.env.SUPABASE_ANON_KEY,
+        { global: { headers: { Authorization: `Bearer ${req.token}` } } }
+    )
+
+    const { data, error } = await userClient
+        .from('favourites')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+    if (error) {
+        return res.status(500).json({ error: error.message })
+    }
+        
+
+    res.json(data)
+})
+
+*/
 
 app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     try{
