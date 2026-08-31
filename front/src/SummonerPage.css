@@ -548,6 +548,8 @@ flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .dots {
@@ -854,6 +856,13 @@ flex-shrink: 0;
     color: #f0c040;
     cursor: pointer;
     padding: 0;
+    
+}
+
+.loadingScreen p{
+    color: #a0afbe;
+    font-size: 30px;
+    
     
 }
 

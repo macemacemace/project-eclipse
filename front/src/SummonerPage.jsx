@@ -24,6 +24,7 @@ const SummonerPage = () =>{
   const [user, setUser] = useState(null)
   const [isFavourite, setIsFavourite] = useState(false)
   const navigate = useNavigate()
+  const [error, setError] = useState(null);
 
 
 
@@ -100,7 +101,13 @@ const SummonerPage = () =>{
   }
   
   useEffect(() => {
-    async function fetchData() {
+
+    setError(null)
+   
+      
+      async function fetchData() {
+
+       try{
 
       const versionRes = await fetch("https://ddragon.leagueoflegends.com/api/versions.json");
         const versions = await versionRes.json();
@@ -120,9 +127,9 @@ const SummonerPage = () =>{
 
    
    if(!response.ok){
+    const errData = await response.json()
+    throw new Error(errData.error)
 
-
-      throw new Error("cant fetch data")
     }
    if (!spellJson.ok){
     throw new Error("cant fetch summoner json")
@@ -148,7 +155,17 @@ const SummonerPage = () =>{
       setItemData(itemDataParsed)
 
     }
-    fetchData()
+
+    catch(err)
+    {
+      setError(err.message);
+    }
+  
+  }
+
+    
+    
+   fetchData()
   }, [region, name, tag])
 
   function getSpellName(spellId, spellData){
@@ -192,6 +209,18 @@ if (isFavourite) {
   
   const roles = ['Top', 'Jungle', 'Mid', 'Bottom', 'Support', 'Top', 'Jungle', 'Mid', 'Bottom', 'Support'];
   
+
+  if(error){
+  return (
+    <div className="loadingScreen">
+      <Navbar></Navbar>
+      <p>{error} :(</p>
+      <p>Click the icon to go back</p>
+      
+    </div>
+  )
+}
+
    if (!summonerData || !spellData || !runesData || !itemData) {
   return (
   <div className="loadingScreen">
@@ -204,6 +233,7 @@ if (isFavourite) {
   </div>
   )
 }
+
   
 const soloQueue = summonerData?.data2?.find(q => q.queueType === 'RANKED_SOLO_5x5')
 

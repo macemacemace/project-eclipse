@@ -132,6 +132,12 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
   
    
     if(!response.ok){
+        if(response.status === 404){
+            return res.status(404).json({error: "Summoner not found"})
+        }
+        if(response.status === 429){
+            return res.status(429).json({error: "Too many requests"})
+        }
         const errData = await response.json();
         console.log(errData);
         throw new Error("cant fetch");
@@ -354,6 +360,8 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
     }
     catch(error){
         console.error(error);
+        res.status(500).json({error: "Something went wrong"})
+        
     }
 
     
