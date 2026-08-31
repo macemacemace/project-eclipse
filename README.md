@@ -22,7 +22,7 @@ A web app for looking up League of Legends summoner profiles and match history, 
 
 ## Screenshots
 
-![App Demo](reactJavas/ezgif-166e63dbe641920c.gif)
+![App Demo](front/ezgif-166e63dbe641920c.gif)
 
 
 ## How to Run
@@ -35,6 +35,6 @@ https://project-eclipse-theta.vercel.app
 
 1. Clone the repo
 2. Add your Riot API key to the backend
-3. Run the backend: `cd summonerInfo && npm install && npm start`
-4. Run the frontend: `cd reactJavas && npm install && npm run dev`
+3. Run the backend: `cd back && npm install && npm start`
+4. Run the frontend: `cd front && npm install && npm run dev`
 5. Open `http://localhost:5173`

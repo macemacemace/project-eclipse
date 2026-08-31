@@ -271,6 +271,7 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                         
                     ))}
                 </div>
+                <div>HELLO</div>
                 
                 <div className="runes">
                     <div className="tooltip-wrapper">
@@ -346,6 +347,8 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                             </div>
                         ))}
                     </div>
+
+                    <div className="playerRank">HELLO</div>
                     
                     <div className="runes">
                      <div className="runeKeystone">
