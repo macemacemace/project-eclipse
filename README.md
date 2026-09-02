@@ -24,10 +24,9 @@ A web app for looking up League of Legends summoner profiles and match history, 
 
 ![App Demo](front/ezgif-166e63dbe641920c.gif)
 
-
 ## How to Run
 
-https://project-eclipse-theta.vercel.app
+https://eclipse.martinjakovoski.dev/
 
 -It might take ~50s to load
 
