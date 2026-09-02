@@ -865,4 +865,21 @@ flex-shrink: 0;
     
     
 }
+.playerRank{
+    font-weight: 11px;
+    
+
+}
+
+.playerLp{
+    
+    color: #7d94a6;
+}
+.playerRankBox{
+    display: flex;
+    flex-direction: column;
+    line-height: 1.3;
+    align-items: center;
+    padding-left: 40px;
+}
 

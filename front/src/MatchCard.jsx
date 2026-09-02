@@ -12,6 +12,24 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
     const [isOpen, setIsOpen] = useState(false);
     const [overflowVisible, setOverflowVisible] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [ranks, setRanks] = useState(null);
+
+    const fetchRanks = async()=>{
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/ranks`,{
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({puuid: match.puuidArray, region:region})
+
+            })
+            const data =await response.json()
+            console.log(data)
+            setRanks(data)
+        }
+        catch (error){
+            console.error(error);
+        }
+    }
 
     const handleToggle = () => {
         if (isOpen) {
@@ -19,6 +37,10 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
             setIsOpen(false);
         } else {
             setIsOpen(true);
+            if(!ranks){
+                fetchRanks()
+            }
+            
         }
     };
   const kills = match.playerKillsArray[playerIndex];
@@ -117,6 +139,28 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
         setAnalysis(data.analysis);
 
         setLoading(false);
+    }
+
+    const rankFor = (i) => {
+        if(!ranks) {
+            return "";
+        }
+        const r = ranks.find(x => x.puuid === match.puuidArray[i]);
+        if(!r  || !r.tier){
+            return "Unranked"
+        }
+        return `${r.tier} ${r.division} `;
+    }
+
+    const lpFor = (i) => {
+        if(!ranks) {
+            return "";
+        }
+        const r = ranks.find(x => x.puuid === match.puuidArray[i]);
+        if(!r  || !r.tier){
+            return ""
+        }
+        return `${r.lp} LP`;
     }
         
 
@@ -271,8 +315,10 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                         
                     ))}
                 </div>
-                <div>HELLO</div>
-                
+                <div className="playerRankBox">
+                <div className="playerRank">{rankFor(i)}</div>
+                <div className="playerLp">{lpFor(i)}</div>
+                </div>
                 <div className="runes">
                     <div className="tooltip-wrapper">
     <div className="runeKeystone">
@@ -347,9 +393,10 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                             </div>
                         ))}
                     </div>
-
-                    <div className="playerRank">HELLO</div>
-                    
+                        <div className="playerRankBox">
+                    <div className="playerRank">{rankFor(ri)}</div>
+                    <div className="playerLp">{lpFor(ri)}</div>
+                    </div>
                     <div className="runes">
                      <div className="runeKeystone">
                        <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyStonesArray[i], runesData)?.icon}`} alt="keystone"/>

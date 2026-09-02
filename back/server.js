@@ -19,6 +19,11 @@ const supabase = createClient(
     process.env.SUPABASE_ANON_KEY
 )
 
+const supabaseAdmin = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_KEY
+)
+
 
 async function requireAuth(req,res,next){
     const header = req.headers.authorization
@@ -56,6 +61,86 @@ app.use(express.json())
 
 app.get('/me', requireAuth, (req, res) => {
     res.json({ id: req.user.id, email: req.user.email })
+})
+
+
+app.post('/ranks', async(req,res) =>{
+    try{
+        const {puuid, region} = req.body
+        const results = []
+        const rowsToSave = [];
+
+
+        const {data: cached} = await supabaseAdmin
+        .from('player_ranks')
+        .select('*')
+        .in('puuid', puuid)
+
+        
+
+
+        for(let i = 0; i < puuid.length; i++){
+
+
+            const hit =cached.find(c => c.puuid === puuid[i])
+        const sixHoursAgo = Date.now() - 6 * 60 * 60 * 1000
+
+        if(hit && new Date(hit.updated_at).getTime() >sixHoursAgo){
+            results.push({puuid: hit.puuid, tier: hit.tier, division:hit.division, lp:hit.lp, wins: hit.wins, 
+                losses:hit.losses})
+
+            continue
+        }
+            
+            const responseRanks = await fetch(`https://${region}.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid[i]}?api_key=${apiKey}`)
+            const ranksData = await responseRanks.json();
+
+            const solo = ranksData.find(e => e.queueType === 'RANKED_SOLO_5x5')
+
+            if(solo){
+                
+                const row = {
+                     puuid: puuid[i],
+                     region: region,
+                    tier: solo.tier,
+                     division: solo.rank,
+                    lp: solo.leaguePoints,
+                     wins: solo.wins,
+                    losses: solo.losses,
+                    updated_at: new Date()
+        }
+        results.push(row)
+        rowsToSave.push(row)
+            } else {
+               
+                     const row = {
+    puuid: puuid[i],
+    region: region,
+    tier: null,
+    division: null,
+    lp: null,
+    wins: null,
+    losses: null,
+    updated_at: new Date()
+}
+results.push(row)
+rowsToSave.push(row)
+            }
+            
+        }
+        if(rowsToSave.length >0){
+        await supabaseAdmin
+        .from('player_ranks')
+        .upsert(rowsToSave, {onConflict: 'puuid'})
+       
+        }
+         res.json(results);
+        
+    }
+    catch(error){
+        console.error(error)
+        res.status(500).json({error: "cound not fetch ranks"})
+    }
 })
 
 /* PARKED - works, but not wired up to the frontend yet.
@@ -222,6 +307,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
             const playerShard3Array = []; 
         const playerLpArray = [];
          const teamPositionArray = [];
+         const puuidArray = [];
         
             
             
@@ -243,6 +329,8 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         const playerTeam = data4.info.participants[j].teamId
         playerTeamArray.push(playerTeam)
         const teamPosition = data4.info.participants[j].teamPosition
+        const playerPuuid = data4.info.participants[j].puuid
+        puuidArray.push(playerPuuid);
         teamPositionArray.push(teamPosition)
         const winner = data4.info.participants[j].win
         winningTeam.push(winner)
@@ -340,7 +428,8 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         playerShard1Array,
         playerShard2Array,
         playerShard3Array,
-        teamPositionArray}
+        teamPositionArray,
+    puuidArray}
     
     matchesArray.push(dataMatch);
     
