@@ -25,6 +25,8 @@ const SummonerPage = () =>{
   const [isFavourite, setIsFavourite] = useState(false)
   const navigate = useNavigate()
   const [error, setError] = useState(null);
+  const [liveGame, setLiveGame] = useState(null);
+  const [liveError, setLiveError] = useState(null);
 
 
 
@@ -210,6 +212,31 @@ if (isFavourite) {
   const roles = ['Top', 'Jungle', 'Mid', 'Bottom', 'Support', 'Top', 'Jungle', 'Mid', 'Bottom', 'Support'];
   
 
+  async function getLiveGame(){
+
+    try{
+      setLiveError(null);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/live/${region}/${summonerData.data.puuid}`);
+
+
+    if(response.status ===404){
+      setLiveError("Not in game")
+      return
+    }
+    if(!response.ok){
+      setLiveError("couldnt load live game")
+      return
+    }
+
+    const data = await response.json()
+    setLiveGame(data);
+    }catch(err)
+    {
+      setLiveError(err.message);
+    }
+    }
+  
+
   if(error){
   return (
     <div className="loadingScreen">
@@ -307,6 +334,9 @@ console.log(summonerData?.data5)
 
     <div className="Matches">
       <div className="Recent">Recent Matches</div>
+      <button className="liveButton" onClick={getLiveGame}>Live Game</button>
+      {liveError && <p className="liveError">{liveError}</p>}
+      {liveGame && <p>In game: {liveGame.participants.length} players</p>}
      {summonerData?.matchesArray.map((match, index) => {
   const playerIndex = match.riotIdGameNamesArray.findIndex(
     (playerName, i) => playerName.toLowerCase() === name.toLowerCase() && match.riotIdTagLinesArray[i].toLowerCase() === tag.toLowerCase()
@@ -359,4 +389,3 @@ export default SummonerPage;
 
  
 
-{/* */}

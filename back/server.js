@@ -13,6 +13,7 @@ const anthropic = new Anthropic();
 
 
 const { createClient } = require('@supabase/supabase-js')
+const { error } = require('console')
 
 const supabase = createClient(
     process.env.SUPABASE_URL,
@@ -56,6 +57,27 @@ app.use(cors({
     }
 }))
 const apiKey = process.env.RIOT_API_KEY
+
+
+const regionMap={
+            eun1: "europe",
+            euw1 : "europe",
+            br1:"americas",
+            jp1:"asia",
+            kr:"asia",
+            la1:"americas",
+            la2:"americas",
+            tr1:"europe",
+            ru:"europe",
+            na1:"americas",
+            me1:"asia",
+            oc1:"asia",
+            sg2:"asia",
+            tw1:"asia",
+            vn2:"asia"
+
+
+        }
 
 app.use(express.json())
 
@@ -178,25 +200,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
         const tag = req.params.tag;
         
 
-        const regionMap={
-            eun1: "europe",
-            euw1 : "europe",
-            br1:"americas",
-            jp1:"asia",
-            kr:"asia",
-            la1:"americas",
-            la2:"americas",
-            tr1:"europe",
-            ru:"europe",
-            na1:"americas",
-            me1:"asia",
-            oc1:"asia",
-            sg2:"asia",
-            tw1:"asia",
-            vn2:"asia"
-
-
-        }
+        
 
         const region = req.params.region.toLowerCase();
 
@@ -206,6 +210,9 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
              received: region
         })
        }
+
+
+      
 
        
     
@@ -518,6 +525,43 @@ app.get('/champions', async (req,res) => {
 
 
        
+       })
+        app.get('/live/:region/:name/:tag', async(req,res)=> {
+        try{
+            const name = req.params.name
+            const tag = req.params.tag
+            const region = req.params.region.toLowerCase()
+
+
+            const accountRes = await fetch(`https://${regionMap[region]}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${name}/${tag}?api_key=${apiKey}`)
+
+            if (accountRes.status === 404) {
+                 return res.status(404).json({ error: "Summoner not found" })
+                }
+            if (!accountRes.ok) {
+             throw new Error("could not look up account")
+                }
+
+            const account = await accountRes.json()
+            const puuid = account.puuid
+
+            const response = await fetch(`https://${region}.api.riotgames.com/lol/spectator/v5/active-games/by-summoner/${puuid}?api_key=${apiKey}`)
+
+            if (response.status === 404) {
+                return res.status(404).json({ error: "player is not in live game" })
+            }
+
+            if (!response.ok) {
+                throw new Error("something went wrong with fetching live data")
+            }
+
+            const data = await response.json()
+            res.json(data)
+        }
+        catch(error){
+            console.error(error);
+            res.status(500).json({error: "coundnt fetch live game"})
+        }
        })
 
        
