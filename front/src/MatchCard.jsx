@@ -324,8 +324,8 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
     <div className="runeKeystone">
         <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyStonesArray[i], runesData)?.icon}`} alt="keystone"/>
         <span className="tooltip">
-                 <div className="tooltip-name">{getRuneName(match.keyStonesArray[playerIndex], runesData)?.name}</div>
-        <div className="tooltip-desc">{getRuneName(match.keyStonesArray[playerIndex], runesData)?.shortDesc}</div>   
+                 <div className="tooltip-name">{getRuneName(match.keyStonesArray[i], runesData)?.name}</div>
+        <div className="tooltip-desc">{getRuneName(match.keyStonesArray[i], runesData)?.shortDesc}</div>
 
         </span>
     </div>
@@ -399,14 +399,14 @@ const MatchCard = ({ match, playerIndex, spellData, runesData, getSpellName, get
                     </div>
                     <div className="runes">
                      <div className="runeKeystone">
-                       <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyStonesArray[i], runesData)?.icon}`} alt="keystone"/>
+                       <img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyStonesArray[ri], runesData)?.icon}`} alt="keystone"/>
                      </div>
-    <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune1Array[i], runesData)?.icon}`} alt="rune1"/></div>
-    <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune2Array[i], runesData)?.icon}`} alt="rune2"/></div>
-    <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune3Array[i], runesData)?.icon}`} alt="rune3"/></div>
+    <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune1Array[ri], runesData)?.icon}`} alt="rune1"/></div>
+    <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune2Array[ri], runesData)?.icon}`} alt="rune2"/></div>
+    <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.keyRune3Array[ri], runesData)?.icon}`} alt="rune3"/></div>
     <div className="runeSep">|</div>
-    <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRune1Array[i], runesData)?.icon}`} alt="rune4"/></div>
-    <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRune2Array[i], runesData)?.icon}`} alt="rune5"/></div>
+    <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRune1Array[ri], runesData)?.icon}`} alt="rune4"/></div>
+    <div className="runeSm"><img src={`https://ddragon.leagueoflegends.com/cdn/img/${getRuneName(match.secondaryRune2Array[ri], runesData)?.icon}`} alt="rune5"/></div>
 
     
 </div>
