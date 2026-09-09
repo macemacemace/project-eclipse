@@ -4,8 +4,9 @@ import {useState} from "react"
 import './SummonerPage.css'
 import MatchCard from './MatchCard'
 import Navbar from './Navbar'
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { supabase } from "./supabaseClient";
+
 
 const SummonerPage = () =>{
 
@@ -25,8 +26,7 @@ const SummonerPage = () =>{
   const [isFavourite, setIsFavourite] = useState(false)
   const navigate = useNavigate()
   const [error, setError] = useState(null);
-  const [liveGame, setLiveGame] = useState(null);
-  const [liveError, setLiveError] = useState(null);
+
 
 
 
@@ -334,9 +334,7 @@ console.log(summonerData?.data5)
 
     <div className="Matches">
       <div className="Recent">Recent Matches</div>
-      <button className="liveButton" onClick={getLiveGame}>Live Game</button>
-      {liveError && <p className="liveError">{liveError}</p>}
-      {liveGame && <p>In game: {liveGame.participants.length} players</p>}
+      <Link to={`/live/${region}/${name}/${tag}`} className="liveButton">Live Game</Link>
      {summonerData?.matchesArray.map((match, index) => {
   const playerIndex = match.riotIdGameNamesArray.findIndex(
     (playerName, i) => playerName.toLowerCase() === name.toLowerCase() && match.riotIdTagLinesArray[i].toLowerCase() === tag.toLowerCase()

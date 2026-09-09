@@ -8,6 +8,7 @@ import Logo from './logo.svg?react'
 import ChampionsPage from './ChampionsPage'
 import Navbar from "./Navbar";
 import LoginPage from "./LoginPage";
+import LiveGamePage from "./LiveGamePage";
 
 
 
@@ -111,6 +112,7 @@ const router = createBrowserRouter([
   {path: "/", element: <HomePage />},
   {path: "/:region/:name/:tag", element: <SummonerPage />},
   {path: "/champions", element: <ChampionsPage />},
+  {path: "/live/:region/:name/:tag", element: <LiveGamePage/>},
   {path: "/login", element: <LoginPage/>}
 ])
 
