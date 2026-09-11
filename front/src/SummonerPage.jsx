@@ -331,10 +331,12 @@ console.log(summonerData?.data5)
 
 
     </div>  {/*end of profile card*/}
-
-    <div className="Matches">
+<div className="Matches">
+    <div className="matchesHeader">
+    
       <div className="Recent">Recent Matches</div>
       <Link to={`/live/${region}/${name}/${tag}`} className="liveButton">Live Game</Link>
+      </div>
      {summonerData?.matchesArray.map((match, index) => {
   const playerIndex = match.riotIdGameNamesArray.findIndex(
     (playerName, i) => playerName.toLowerCase() === name.toLowerCase() && match.riotIdTagLinesArray[i].toLowerCase() === tag.toLowerCase()

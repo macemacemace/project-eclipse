@@ -115,6 +115,10 @@ app.post('/ranks', async(req,res) =>{
         }
             
             const responseRanks = await fetch(`https://${region}.api.riotgames.com/lol/league/v4/entries/by-puuid/${puuid[i]}?api_key=${apiKey}`)
+            if(!responseRanks.ok){
+                results.push({puuid: puuid[i], tier:null,division: null, lp: null, wins: null, losses: null })
+                continue;
+            }
             const ranksData = await responseRanks.json();
 
             const solo = ranksData.find(e => e.queueType === 'RANKED_SOLO_5x5')
@@ -250,7 +254,7 @@ app.get(`/summoner/:region/:name/:tag`, async (req, res)  =>  {
 
     const data2 = await response2.json();
 
-    const response3 = await fetch(`https://${regionMap[region]}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10&api_key=${apiKey}`)
+    const response3 = await fetch(`https://${regionMap[region]}.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=10&queue=420&api_key=${apiKey}`)
     
     if(!response3.ok){
         throw new Error("cant fetch last 10 matches");

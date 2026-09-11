@@ -883,3 +883,22 @@ flex-shrink: 0;
     padding-left: 40px;
 }
 
+.matchesHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.liveButton {
+    color: #e0eaf0;
+    background: #111a24;
+    border: 1px solid #1e2d3a;
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.liveButton:hover {
+    border-color: #e84057;
+}
+
