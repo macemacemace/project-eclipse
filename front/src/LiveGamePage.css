@@ -1,0 +1,177 @@
+.liveGamePage {
+    min-height: 100vh;
+    padding: 120px 24px 60px;
+    color: #dbe4ec;
+}
+
+.liveGamePage > p {
+    text-align: center;
+    color: #7d94a6;
+    font-size: 18px;
+}
+
+.liveContent {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* header */
+.liveHeader {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.liveDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #e84057;
+    animation: livePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(232, 64, 87, 0.6); }
+    50% { box-shadow: 0 0 0 8px rgba(232, 64, 87, 0); }
+}
+
+.liveTitle {
+    font-size: 22px;
+    font-weight: 700;
+    color: #e0eaf0;
+}
+
+.liveQueue {
+    font-size: 13px;
+    color: #7d94a6;
+    background: #111a24;
+    border: 1px solid #1e2d3a;
+    border-radius: 999px;
+    padding: 4px 12px;
+}
+
+/* team cards */
+.teams {
+    display: flex;
+    gap: 20px;
+}
+
+.team {
+    flex: 1;
+    background: #0f1923;
+    border: 1px solid #1e2d3a;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.team.blue { border-top: 3px solid #5b9bd5; }
+.team.red  { border-top: 3px solid #d55b5b; }
+
+.teamHeader {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 12px 16px 8px;
+}
+
+.team.blue .teamHeader { color: #5b9bd5; }
+.team.red .teamHeader  { color: #d55b5b; }
+
+/* rows */
+.livePlayer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    border-top: 1px solid #16222e;
+    transition: background 0.15s;
+}
+
+.livePlayer:hover { background: #13202d; }
+.livePlayer.me    { background: #0d1e17; }
+.livePlayer.me .liveChamp { color: #00c896; }
+
+.livePlayer img {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+}
+
+.liveBan {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.liveBan img {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    filter: grayscale(100%);
+    opacity: 0.5;
+}
+
+.liveSpells,
+.liveRunes {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.liveSpells img,
+.liveRunes img {
+    width: 19px;
+    height: 19px;
+    border-radius: 3px;
+}
+
+.liveRunes img {
+    background: #0a0e14;
+    border-radius: 50%;
+}
+
+/* name */
+.liveName {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+}
+
+.liveChamp {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e0eaf0;
+}
+
+.liveRiot {
+    font-size: 12px;
+    color: #7d94a6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* rank */
+.liveRank {
+    width: 150px;
+    flex-shrink: 0;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: #7d94a6;
+}
+
+.liveRank[data-tier="IRON"]        { color: #8a8a8a; }
+.liveRank[data-tier="BRONZE"]      { color: #a0715e; }
+.liveRank[data-tier="SILVER"]      { color: #9aa8bd; }
+.liveRank[data-tier="GOLD"]        { color: #c89b3c; }
+.liveRank[data-tier="PLATINUM"]    { color: #4e9996; }
+.liveRank[data-tier="EMERALD"]     { color: #2dab6e; }
+.liveRank[data-tier="DIAMOND"]     { color: #7185e0; }
+.liveRank[data-tier="MASTER"]      { color: #b25ce8; }
+.liveRank[data-tier="GRANDMASTER"] { color: #e05a5a; }
+.liveRank[data-tier="CHALLENGER"]  { color: #f4c874; }
