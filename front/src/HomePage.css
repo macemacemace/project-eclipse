@@ -41,6 +41,7 @@ button{
     width: 250px;
     margin-top: 20px;
     font-size: 25px;
+    cursor: pointer;
     
 }
 .search-wrapper {

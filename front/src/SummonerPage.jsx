@@ -338,9 +338,17 @@ console.log(summonerData?.data5)
       <Link to={`/live/${region}/${name}/${tag}`} className="liveButton">Live Game</Link>
       </div>
      {summonerData?.matchesArray.map((match, index) => {
-  const playerIndex = match.riotIdGameNamesArray.findIndex(
-    (playerName, i) => playerName.toLowerCase() === name.toLowerCase() && match.riotIdTagLinesArray[i].toLowerCase() === tag.toLowerCase()
-  )
+  // match on puuid, not display name: riotIdGameName is stored as it was when the
+  // game was played, so a rename (or streamer mode) makes the name lookup miss
+  let playerIndex = match.puuidArray?.findIndex(p => p === summonerData.data.puuid) ?? -1
+
+  if (playerIndex === -1) {
+    playerIndex = match.riotIdGameNamesArray.findIndex(
+      (playerName, i) => playerName?.toLowerCase() === name.toLowerCase() && match.riotIdTagLinesArray[i]?.toLowerCase() === tag.toLowerCase()
+    )
+  }
+
+  if (playerIndex === -1) return null
 
 
 

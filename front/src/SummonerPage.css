@@ -394,7 +394,11 @@ flex-shrink: 0;
 .playerName {
     color: #c8d6e0;
     font-size: 15px;
-    min-width: 120px;
+    /* fixed width, not min-width: a long name must clip instead of pushing
+       the columns after it. min-width: 0 defeats the flex-item auto minimum,
+       which otherwise refuses to shrink below the text and breaks ellipsis */
+    flex: 0 0 150px;
+    min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -408,14 +412,14 @@ flex-shrink: 0;
 .playerKda {
     color: #e0eaf0;
     font-size: 20px;
-    min-width: 80px;
+    flex: 0 0 80px;
     text-align: center;
 }
 
 .playerCs {
     color: #a0afbe;
     font-size: 14px;
-    min-width: 60px;
+    flex: 0 0 60px;
 }
 
 .miniItems {
